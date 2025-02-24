@@ -122,4 +122,19 @@ public class Employee {
         this.address = address;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "empNo=" + empNo +
+                ", empName='" + empName + '\'' +
+                ", dept='" + dept + '\'' +
+                ", job='" + job + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                ", salary=" + salary +
+                ", bonusPoint=" + bonusPoint +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 } // class end

@@ -132,7 +132,20 @@ public class Menu {
 				System.out.println("\n* 정수, 실수 아무거나 입력해도 됩니다 * \n");
 				
 				// 두 수(String타입)를 입력받은 후
-				// Calculator 클래스의 sumString 메소드 호출시 전달하여 결과받아 출력하기 
+				// Calculator 클래스의 sumString 메소드 호출시 전달하여 결과받아 출력하기
+				System.out.println("합을 구할 숫자 입력");
+				System.out.print("숫자 1 : ");
+				String num1 = sc.nextLine();
+				System.out.print("숫자 2 : ");
+				String num2 = sc.nextLine();
+
+				int result = calc.sumString(num1, num2);
+				if (num1.contains(".") || num2.contains(".")) {
+					System.out.printf("%s + %s = %d(반올림)\n", num1, num2, result);
+				} else {
+					System.out.printf("%s + %s = %d\n", num1, num2, result);
+				}
+
 				
 			}else if(menu == 2) {
 				System.out.println("\n* 정수형으로만 입력해주세요 *\n");
@@ -140,6 +153,17 @@ public class Menu {
 				// 두 수(String타입)을 입력받은 후 
 				// Calculator 클래스의 minusString 메소드 호출시 전달하여 결과받아 출력하기
 				// 단, 두 수 중에 실수형태로 입력됐을 경우 "정수만 입력하라니깐요." 출력
+				System.out.println("차이를 구할 숫자 입력");
+				System.out.print("숫자 1 : ");
+				String num1 = sc.nextLine();
+				System.out.print("숫자 2 : ");
+				String num2 = sc.nextLine();
+				int result = calc.minusString(num1, num2);
+				if (result == -1) {
+					System.out.println("정수만 입력하라니깐요.");
+				} else {
+					System.out.printf("%s와 %s의 차는 %d 입니다.", num1, num2, result);
+				}
 				
 				
 			}else if(menu == 0) {
@@ -172,6 +196,7 @@ public class Menu {
 				System.out.println("\n* 현재 시스템 날짜 및 시간 *\n");
 				
 				// Calculator 클래스의 printNowDateTime 메소드 호출하기
+				calc.printNowDateTime();
 				
 			}else if(menu == 2) {
 				
@@ -181,8 +206,15 @@ public class Menu {
 				// Calculator 클래스의 makeCalendar 메소드 호출시 전달하여 결과받기
 				
 				// 위의 결과로 돌려받은 Calendar객체를 Calculator 클래스의 printFormat메소드 호출시 전달하여 실행하기 
-				
-				
+				System.out.print("년도 입력 : ");
+				String year = sc.nextLine();
+				System.out.print("월 입력 : ");
+				String month = sc.nextLine();
+				System.out.print("일 입력 : ");
+				String day = sc.nextLine();
+
+				calc.printFormat(calc.makeCalendar(year, month, day));
+
 			}else if(menu == 3) {
 				
 				System.out.println("\n* 궁금한 년도를 입력해주세요 *\n");
@@ -190,6 +222,16 @@ public class Menu {
 				// 년도(String타입)을 입력받은 후 
 				// Calculator클래스의 isLeapYear 메소드 호출시 전달하여 그에 맞는 결과 출력하기 
 				// 윤년일 경우 "해당 년도는 윤년입니다." 그게아닐 경우 "해당 년도는 평년입니다." 출력하기
+				System.out.print("년도 입력 : ");
+				String yearStr = sc.nextLine();
+
+				int year = Integer.parseInt(yearStr);
+				if (calc.isLeapYear(year)) {
+					System.out.println("해당 년도는 윤년입니다.");
+				} else {
+					System.out.println("해당 년도는 평년입니다.");
+				}
+
 				
 			}else if(menu == 4) {
 				
@@ -198,8 +240,17 @@ public class Menu {
 				// 시작년도, 끝년도(모두 다 String타입)을 입력받은 후 
 				// Calculator 클래스의 leapDate 메소드 호출시 전달하여 결과받아 출력하기
 				// 단, 시작년도를 더 큰 숫자로 썻을 경우 "시작년도를 더 작은 숫자로 써야지.." 출력
-				
-				
+				System.out.print("시작년도 입력 " );
+				int startYear = Integer.parseInt(sc.nextLine());
+				System.out.print("끝 년도 입력 : ");
+				int endYear = Integer.parseInt(sc.nextLine());
+				if (startYear > endYear) {
+					System.out.println("시작년도를 더 작은 숫자로 써야지..");
+				} else {
+					System.out.println(calc.leapDate(startYear, endYear));
+				}
+
+
 			}else if(menu == 0) {
 				
 				System.out.println("\n메인메뉴로 돌아갑니다.");
