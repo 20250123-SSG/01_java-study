@@ -122,8 +122,9 @@ public class Employee {
         return (int) ((salary + (salary * bonusPoint)) * 12);
     }
 
-    public String toString() {
+    public String getInformation() {
         return id + ", " + name + ", " + department + ", " + position + ", " + age + ", " + gender +
                 ", " + salary + ", " + bonusPoint + ", " + phone + ", " + address;
     }
+
 }

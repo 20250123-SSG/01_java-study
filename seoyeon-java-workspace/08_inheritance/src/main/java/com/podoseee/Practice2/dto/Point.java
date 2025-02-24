@@ -12,7 +12,7 @@ public class Point {
         this.y = y;
     }
 
-    public static int getX() {
+    public int getX() {
         return x;
     }
 
@@ -20,7 +20,7 @@ public class Point {
         this.x = x;
     }
 
-    public static int getY() {
+    public int getY() {
         return y;
     }
 
