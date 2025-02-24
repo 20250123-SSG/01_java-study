@@ -17,11 +17,24 @@ public class Application {
 
         System.out.println("=============================================");
 
-        emp[0] = new Employee(0,"김말똥","영엉부", "팀장", 30, 'M', 3000000, 0.2, "01055559999", "전라도 광주" );
-        emp[1] = new Employee(1,"홍길동", "기획부", "부장", 19, 'M',4000000, 0.3, "01022223333", "서울 잠실");
-        System.out.println(emp[0].getInformation());
-        System.out.println(emp[1].getInformation());
+        emp[0].setEmpNo(0);
+        emp[0].setEmpName("김말똥");
+        emp[0].setDept("영업부");
+        emp[0].setJob("팀장");
+        emp[0].setAge(30);
+        emp[0].setGender('M');
+        emp[0].setSalary(3000000);
+        emp[0].setBonusPoint(0.2);
+        emp[0].setPhone("01055559999");
+        emp[0].setAddress("전라도 광주");
 
+        emp[1].setDept("기획부");
+        emp[1].setJob("부장");
+        emp[1].setSalary(4000000);
+        emp[1].setBonusPoint(0.3);
+
+        System.out.println("emp[0] : " + emp[0].getInformation());
+        System.out.println("emp[1] : " + emp[1].getInformation());
         System.out.println("============================================");
 
         long annualIncome = 0;

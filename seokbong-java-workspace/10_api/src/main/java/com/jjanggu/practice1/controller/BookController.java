@@ -31,6 +31,8 @@ public class BookController {
 
     public void insertBook(String newTitle, String newAuthor, String newPublisher, String newDate, String newPrice) {
 
+        int price = Integer.parseInt(newPrice);
+
         // 전달된 신규 도서 정보들을 담은 Book객체를 생성하여 list 배열의 마지막 인덱스 자리에 대입하시오.
 
 				/*

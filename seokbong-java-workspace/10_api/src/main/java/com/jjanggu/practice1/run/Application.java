@@ -2,6 +2,8 @@ package com.jjanggu.practice1.run;
 
 import com.jjanggu.practice1.controller.BookController;
 
+import java.util.Scanner;
+
 public class Application{
     public static void main(String[] args) {
 
@@ -15,6 +17,21 @@ public class Application{
 
 
         System.out.println("\n-----------2. 새로운 도서 추가----------");
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("도서명을 입력하시오 : ");
+        String newtitle = sc.nextLine();
+        System.out.println("저자명을 입력하시오 : ");
+        String newauthor = sc.nextLine();
+        System.out.println("출판사명을 입력하시오 : ");
+        String newpublisher = sc.nextLine();
+        System.out.println("출판일 (2011-12-01 과 같이 '-'구분자를 이용하여 입력하시오) : ");
+        String newDate = sc.nextLine();
+        System.out.println("가격을 입력하시오 : ");
+        String newPrice = sc.nextLine();
+        bc.insertBook(newtitle, newauthor, newpublisher , newDate, newPrice);
+
+
         // 2. 새로이 등록할 도서 정보 입력받기
         //    도서명, 저자명, 출판사명, 출판일(XXXX-XX-XX형식의 문자열로 입력유도), 가격
         //    5개 모두 문자열로 입력받기
