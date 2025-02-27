@@ -28,7 +28,8 @@ public class Application{
                 System.out.println("사용가능");
             }
         }catch (NamingException e){
-            e.printStackTrace();
+            System.out.println("예외 발생!");
+            System.out.println(e.getMessage());
         }
 
 
