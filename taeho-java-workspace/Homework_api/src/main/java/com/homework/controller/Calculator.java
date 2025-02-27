@@ -39,6 +39,12 @@ public class Calculator implements DateCalculator, MathCalculator, StringCalcula
         System.out.println(date + " " + time);
     }
 
+    public void printNowDateTimeTest() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String s = localDateTime.toString();
+        System.out.println(s.split("T")[0] + " " + s.split("T")[1].split("\\.")[0] );
+    }
+
     @Override
     public Calendar makeCalendar(String year, String month, String date) {
         Calendar calendar = Calendar.getInstance();
@@ -75,7 +81,6 @@ public class Calculator implements DateCalculator, MathCalculator, StringCalcula
     }
 
     public boolean floatTypeCheck(String s) {
-
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (c == '.') {
@@ -152,6 +157,24 @@ public class Calculator implements DateCalculator, MathCalculator, StringCalcula
         return sb.toString();
     }
 
+    public String toSpaceUpperTest(String str){
+        char[] charArr = str.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < charArr.length; i++) {
+            char c = charArr[i];
+            if (i == 0){
+                sb.append(Character.toUpperCase(c));
+                continue;
+            }
+            if (charArr[i - 1] == ' '){
+                sb.append(Character.toUpperCase(c));
+                continue;
+            }
+            sb.append(c);
+        }
+        return sb.toString();
+    }
+
     @Override
     public FoodShop[] csvFormat() {
         String csvStr = "1,맘스쿡,광주광역시 동구 동계천로143,062-233-1233,향토맛집,2022-01-11\n"
@@ -166,7 +189,6 @@ public class Calculator implements DateCalculator, MathCalculator, StringCalcula
                 + "10,백년미가(유촌점),광주광역시 서구 유덕로28번길 18,062-946-3392,한상맛집,2022-10-10";
 
         String[] shopList = csvStr.split("\n");
-        System.out.println(Arrays.toString(shopList));
         FoodShop[] foodShops = new FoodShop[shopList.length];
         for (int i = 0; i < foodShops.length; i++) {
             String[] shopDetials = shopList[i].split(",");
@@ -176,7 +198,6 @@ public class Calculator implements DateCalculator, MathCalculator, StringCalcula
             String phoneNumber = shopDetials[3];
             String category = shopDetials[4];
             LocalDate localDateTime = LocalDate.parse(shopDetials[5]);
-            System.out.println(localDateTime);
             FoodShop foodShop = new FoodShop(shopId, shopName, address, phoneNumber, category, localDateTime);
             foodShops[i] = foodShop;
         }
