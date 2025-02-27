@@ -1,7 +1,9 @@
 package practice2.mvc.view;
 
 import practice2.mvc.controller.LibraryManager;
+import practice2.mvc.dto.AniBook;
 import practice2.mvc.dto.Book;
+import practice2.mvc.dto.CookBook;
 import practice2.mvc.dto.Member;
 
 import java.util.List;
@@ -11,6 +13,50 @@ public class LibraryMenu {
     private LibraryManager lm = new LibraryManager();
     private Scanner sc = new Scanner(System.in);
 
+    public void login() {
+        System.out.println("******** 환영합니다 *******");
+        System.out.print("아이디 : ");
+        String userId = sc.nextLine();
+        System.out.print("비밀번호 : ");
+        String userPwd = sc.nextLine();
+
+        String user = lm.login(userId, userPwd);
+
+        if (user.equals("admin")) {
+            System.out.println("관리자님 환영합니다. 도서관리메뉴로 이동합니다.");
+            adminMenu();
+        } else {
+            System.out.println("처음 방문하셨군요. 회원등록부터 진행합니다.");
+            mainMenu();
+        }
+    }
+
+    public void adminMenu() {
+        while (true) {
+            System.out.println("\n==== 관리자메뉴 ====");
+            System.out.println("1. 도서 전체 조회");    // selectAll()
+            System.out.println("2. 새로운 도서 추가");    // 기능 추가 해보기
+            System.out.println("3. 기존 도서 삭제");    // 기능 추가 해보기
+            System.out.println("4. 기존 도서 수정");    // 기능 추가 해보기
+            System.out.println("0. 프로그램 종료하기");
+            System.out.print(">> 메뉴 선택 : ");
+            int menu = sc.nextInt();
+            sc.nextLine();
+
+            switch (menu) {
+                case 1: selectAll();break;
+                case 2: addNewBookInLibrary();break;
+                case 3: deleteBookInLibrary();break;
+                case 4: editBookInLibrary();break;
+                case 0:
+                    System.out.println("안녕히가세요 관리자님.");
+                    return;
+                default:
+                    System.out.println("다시입력해주세용");
+            }
+        }
+    }
+
     public void mainMenu() {
         System.out.println("이름, 나이, 성별을 입력하세요");
         String name = sc.nextLine();
@@ -19,32 +65,138 @@ public class LibraryMenu {
         char gender = sc.next().charAt(0);
         lm.insertMember(name, age, gender);
 
-        System.out.println("""
-                			  	==== 메뉴 ====	  
-                				1.  마이페이지		
-                				2. 도서 전체 조회	
-                				3. 도서 검색		  
-                				4. 도서 대여하기	 
-                				0. 프로그램 종료하기	
-                """);
-        int menuNum = sc.nextInt();
-        sc.nextLine();
+        while (true) {
+            System.out.println("""
+                    			  	==== 메뉴 ====	  
+                    				1.  마이페이지		
+                    				2. 도서 전체 조회	
+                    				3. 도서 검색		  
+                    				4. 도서 대여하기	 
+                    				0. 프로그램 종료하기	
+                    """);
+            int menuNum = sc.nextInt();
+            sc.nextLine();
 
-        if (menuNum == 0) {
-            return;
-        }
-        if (menuNum == 1) {
-            myPage();
-        } else if (menuNum == 2) {
-            selectAll();
-        } else if (menuNum == 3) {
-            searchBook();
-        } else if (menuNum == 4) {
-            rentBook();
-        } else {
-            System.out.println("존재하지 않는 기능입니다.");
+            if (menuNum == 0) {
+                return;
+            }
+            if (menuNum == 1) {
+                myPage();
+            } else if (menuNum == 2) {
+                selectAll();
+            } else if (menuNum == 3) {
+                searchBook();
+            } else if (menuNum == 4) {
+                rentBook();
+            } else {
+                System.out.println("존재하지 않는 기능입니다.");
+            }
         }
     }
+
+
+
+
+
+    public void addNewBookInLibrary() {
+        System.out.println("제목, 저자, 출판사를 입력해주세요.");
+        String title = sc.nextLine();
+        String author = sc.nextLine();
+        String publisher = sc.nextLine();
+
+        System.out.println("카테고리를 입력해주세요.");
+        System.out.println("""
+                1. 애니
+                2. 요리
+                3. 기타
+                """);
+        int category = sc.nextInt();
+        sc.nextLine();
+
+        Book book = null;
+        if (category == 1) {
+            System.out.println("대여가능연령을 입력해주세요.");
+            int accessAge = sc.nextInt();
+            sc.nextLine();
+            book = new AniBook(title, author, publisher, accessAge);
+
+        } else if (category == 2) {
+            System.out.println("요리 쿠폰이 존재합니까? y/n");
+            String answer = sc.nextLine().toLowerCase();
+            boolean coupon = answer.equals("y");
+            book = new CookBook(title, author, publisher, coupon);
+
+        } else if (category == 3) {
+            book = new Book(title, author, publisher);
+        }
+
+        if (lm.isExist(book)) {
+            System.out.println("이미 존재하는 책입니다.");
+            return;
+        }
+        lm.addBook(book);
+        System.out.println("추가하였습니다.");
+    }
+
+    public void deleteBookInLibrary() {
+        System.out.println("삭제할 도서의 제목, 저자, 출판사를 입력해주세요.");
+        String title = sc.nextLine();
+        String author = sc.nextLine();
+        String publisher = sc.nextLine();
+
+        Book book = lm.findBookByInfo(title, author, publisher);
+        if (book == null) {
+            System.out.println("존재하지 않는 책입니다.");
+            return;
+        }
+        lm.deleteBook(book);
+        System.out.println("삭제되었습니다.");
+    }
+
+    public void editBookInLibrary() {
+        System.out.println("수정할 도서의 제목, 저자, 출판사를 입력해주세요.");
+        String title = sc.nextLine();
+        String author = sc.nextLine();
+        String publisher = sc.nextLine();
+
+        Book book = lm.findBookByInfo(title, author, publisher);
+        if (book == null) {
+            System.out.println("존재하지 않는 책입니다.");
+            return;
+        }
+
+        while (true) {
+            System.out.println("무엇 수정");
+            System.out.println("""
+                    1. 제목
+                    2. 저자
+                    3. 출판사
+                    """);
+
+            if (book instanceof AniBook) {
+                System.out.println("4. 대여가능연령");
+            } else if (book instanceof CookBook) {
+                System.out.println("4. 쿠폰 유무(y/n)");
+            }
+            System.out.println("0. 종료");
+
+            int editOption = sc.nextInt();
+            sc.nextLine();
+            if (editOption == 0) {
+                return;
+            }
+            System.out.println("수정 내용을 입력하세요.");
+            if (lm.editBookByEditOptionNumber(book, editOption, sc.nextLine())) {
+                System.out.println(book);
+                System.out.println("수정되었습니다.");
+            } else {
+                System.out.println("수정에 실패하였습니다.");
+            }
+        }
+    }
+
+
+
 
     public void myPage() {
         Member member = lm.getMember();
@@ -67,7 +219,7 @@ public class LibraryMenu {
     public void selectAll() {
         List<Book> result = lm.selectAll();
         for (int i = 0; i < result.size(); i++) {
-            System.out.println(i + "번째 " + result.get(i));
+            System.out.println(i + 1 + "번째 " + result.get(i));
         }
     }
 
