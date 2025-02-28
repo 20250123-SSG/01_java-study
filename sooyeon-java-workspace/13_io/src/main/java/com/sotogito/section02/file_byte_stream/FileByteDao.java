@@ -1,11 +1,9 @@
-package sotogito.section02.file_byte_stream;
+package com.sotogito.section02.file_byte_stream;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FileByteDao {
     /**

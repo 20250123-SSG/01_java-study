@@ -6,6 +6,7 @@ import practice2.mvc.dto.CookBook;
 import practice2.mvc.dto.Member;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,20 @@ public class LibraryManager {
 
     public void deleteBook(Book book) {
         bookList.remove(book);
+    }
+
+    public boolean switchBookOrder(int bookIndex1, int bookIndex2) {
+//        bookList.set(bookIndex1-1, book2);
+//        bookList.set(bookIndex2-1, book1);
+        if (bookIndex1 == bookIndex2) {
+            return false;
+        }
+        if ((bookIndex1 <= 0 || bookIndex1 > bookList.size()
+                || bookIndex2 <= 0 || bookIndex2 > bookList.size())) {
+            return false;
+        }
+        Collections.swap(bookList, bookIndex1 - 1, bookIndex2 - 1);
+        return true;
     }
 
     public boolean editBookByEditOptionNumber(Book book, int editOption, String editValue) {
@@ -90,7 +105,7 @@ public class LibraryManager {
     }
 
     public List<Book> selectAll() {
-        return this.bookList;
+        return new ArrayList<>(bookList); ///정렬할때 원본이 변경되지않게하기 위해서 복사하고 보내야됨
     }
 
     public List<Book> searchBook(String keyword) {

@@ -1,7 +1,4 @@
-package sotogito.section02.file_byte_stream;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+package com.sotogito.section02.file_byte_stream;
 
 public class Application {
     public static void main(String[] args) {
