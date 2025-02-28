@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>TEST description</comment>
+<entry key="Set">HashSet</entry>
+<entry key="name">John</entry>
+<entry key="List">ArrayList</entry>
+<entry key="Map">Properties</entry>
+<entry key="age">25</entry>
+<entry key="selectMemberList">SELECT * FROM tbl_member WHERE member_name = '김두한'</entry>
+</properties>

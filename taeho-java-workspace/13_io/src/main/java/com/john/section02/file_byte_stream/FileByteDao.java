@@ -8,6 +8,7 @@ import java.io.*;
     File        : 파일이라는 외부매체와 직접 연결되는 "기반스트림"
     OutputStream: 자바 프로그램상의 데이터를 1byte단위로 출력하는 바이트 스트림
     InputStream : 자바 프로그램상으로 데이터를 1byte단위로 입력받는 바이트 스트림
+    close() 는 항상 해주기(메모리 누수 및 데드락 발생 가능성)
  */
 public class FileByteDao {
     public void fileSave() {
