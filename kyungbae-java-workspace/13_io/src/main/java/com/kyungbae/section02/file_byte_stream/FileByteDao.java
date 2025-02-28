@@ -56,6 +56,7 @@ public class FileByteDao {
             e.printStackTrace();
         } finally {
             // 3. 스트림 반납 (필수) => 예외발생여부와 상관없이 반드시 실행
+            // 스트림을 반납(잔류메모리)하지 않으면 메모리 누수가 발생할 수 있음
             if (fos != null) {
                 try {
                     fos.close(); // 만약 new FileOutputStream 생성 시 exception이 발생하면 null 상태로 close() 가 실행될 수 있다. => 오류
