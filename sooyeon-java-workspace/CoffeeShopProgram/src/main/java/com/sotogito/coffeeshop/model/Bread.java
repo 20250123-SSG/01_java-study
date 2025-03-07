@@ -4,7 +4,7 @@ import com.sotogito.coffeeshop.common.ProductType;
 
 import java.util.Objects;
 
-public class Bread implements Product{
+public class Bread implements Product {
     private final String name;
     private final int price;
 
@@ -47,4 +47,5 @@ public class Bread implements Product{
                 ", price=" + price +
                 '}';
     }
+
 }

@@ -47,20 +47,17 @@ public class CoffeeShopView {
         System.out.printf("%s님 안녕하세요.\n", user.getName());
 
         checkAdmin(user);
-
-
     }
 
     public void checkAdmin(User user) {
-        if(user.isIdAdministrator()){
+        if (user.isIdAdministrator()) {
             administratorView.run(user);
-        }else {
+        } else {
             userView.run(user);
         }
     }
 
-
-    private User getUser(String id,String pwd) { //fixme view에 두는게 맞나?
+    private User getUser(String id, String pwd) { //fixme view에 두는게 맞나?
         Optional<User> foundUser = shopController.login(id, pwd);
 
         if (foundUser.isEmpty()) {
@@ -82,6 +79,5 @@ public class CoffeeShopView {
 
         return new User(id, pwd, name, amount);
     }
-
 
 }

@@ -14,21 +14,16 @@ public class UserController {
         this.shopProductManager = shopProductManager;
     }
 
-    public void setUser(){
+    public void changeAmount(User user, int amount) {
+        userOrderManager.chargeAmount(user, amount);
     }
 
-    public void changeAmount(User user,int amount){
-        user.chargeAmount(amount);
-    }
+    public void order(User user, String productName) {
+        userOrderManager.validateZeroAmount(user);
+        userOrderManager.validateOverAmountByMinProduct(user, shopProductManager.getMinimumPrice());
 
-    public void order(User user,String productName){
         Product product = shopProductManager.findProductByName(productName);
         userOrderManager.orderByOne(user, product);
     }
-
-
-
-
-
 
 }

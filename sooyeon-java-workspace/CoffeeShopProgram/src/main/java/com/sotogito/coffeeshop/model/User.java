@@ -1,5 +1,7 @@
 package com.sotogito.coffeeshop.model;
 
+import com.sotogito.coffeeshop.exception.UserAmountShortException;
+
 import java.util.*;
 
 public class User {
@@ -37,20 +39,16 @@ public class User {
     }
 
     public void chargeAmount(int amount) {
-        if(amount <= 0){
+        if (amount <= 0) {
             throw new IllegalArgumentException("1원 이상 입력해주세요.");
         }
         this.amount += amount;
     }
 
     public void purchase(Product product) {
-        if (amount == 0) {
-            throw new IllegalArgumentException("잔액이 없습니다. 충전해주세요.");
-        }
-
         int purchaseAmount = product.getPrice();
-        if ((this.amount - purchaseAmount) <= 0) {
-            throw new IllegalArgumentException("잔액이 부족합니다.");
+        if (!isOverAmountThanProductPrice(purchaseAmount) || (this.amount - purchaseAmount) <= 0) {
+            throw new UserAmountShortException("잔액이 부족합니다.");
         }
 
         this.amount -= purchaseAmount;
@@ -59,6 +57,14 @@ public class User {
 
     public Map<Product, Integer> getOrders() {
         return Collections.unmodifiableMap(orders);
+    }
+
+    public boolean isOverAmountThanProductPrice(int price) {
+        return amount >= price;
+    }
+
+    public boolean isZeroAmount() {
+        return amount == 0;
     }
 
     public String getId() {
@@ -104,4 +110,5 @@ public class User {
                 ", idAdministrator=" + idAdministrator +
                 '}';
     }
+
 }

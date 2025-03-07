@@ -39,32 +39,11 @@
     	  ㄴ 커피목록, 빵목록 조회
     	  ㄴ 반복적으로 주문 가능
 ---
-### DTO
-- User
-  - Id
-  - Pwd
-  - Name
-  - amount
+# TODO
+- 사용자 구매 종료 조건 생각
+  - 사용자 잔액이 0원일 때
+  - 사용자 잔액이 상품의 최소 금액보다 적을 때
 
-- Shop
-  - Name
-  - Adress
-  - MasterId
-
-- Product(i)
-- Coffee
-  - Name
-  - Price
-
-- Bread
-  - Name
-  - Price
-
-#### 관리자 기능 
-- CoffeeShopManager
-  - 정보 수정 d
-  - 매출 관리
-
-#### 사용자 기능
-- List<Product>
+- 구매 재입력 조건
+  - 존재하지 않는 상품일 때
 

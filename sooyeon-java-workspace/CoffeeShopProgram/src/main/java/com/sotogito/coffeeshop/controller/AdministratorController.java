@@ -21,19 +21,19 @@ public class AdministratorController {
         return shopInformationManager.getShop();
     }
 
-    public void editShopName(String newName){
+    public void editShopName(String newName) {
         shopInformationManager.editShopName(newName);
     }
 
-    public void editShopAddress(String newAddress){
+    public void editShopAddress(String newAddress) {
         shopInformationManager.editShopAddress(newAddress);
     }
 
-    public void editShopMasterId(int newMasterId){
+    public void editShopMasterId(int newMasterId) {
         shopInformationManager.editShopMasterId(newMasterId);
     }
 
-    public void addNewCoffeeProduct(Product product){
+    public void addNewCoffeeProduct(Product product) {
         shopProductManager.addNewCoffeeProduct(product);
     }
 

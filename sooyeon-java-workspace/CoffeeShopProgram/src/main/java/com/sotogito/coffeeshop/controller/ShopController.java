@@ -25,11 +25,11 @@ public class ShopController {
         shopUserRepository.addUser(user);
     }
 
-    public List<Product> getCoffeeList(){
+    public List<Product> getCoffeeList() {
         return shopProductManager.getCoffeeList();
     }
 
-    public List<Product> getBreadList(){
+    public List<Product> getBreadList() {
         return shopProductManager.getBreadList();
     }
 
