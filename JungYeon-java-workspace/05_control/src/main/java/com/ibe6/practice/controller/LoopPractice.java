@@ -261,12 +261,36 @@ public class LoopPractice {
         }
     }
 
-    public void practice13(){
+    public void practice13() {
         Scanner sc = new Scanner(System.in);
+        System.out.print("문자열: ");
+        String serch = sc.nextLine();
+        System.out.print("찾고자 하는 문자: ");
+        char op = sc.nextLine().charAt(0);
 
+        int count = 0;
+        for (int i = 0; i < serch.length(); i++) {
+            if (serch.charAt(i) == op) {
+                count++;
+            }
+        }
+        System.out.println("포함된 갯수:" + count);
+    }
+
+    public void practice14() {
+        int plus = 70;
+        int sum = 0;
+        int count = 0;
+
+        for (int i = 1; sum <= 10000; i++) {
+            sum += plus;
+            System.out.println("--------------------");
+            System.out.println( i + "회 모금액: " + sum );
+            count++;
+        }
+        System.out.println("총 모금횟수: " + count + "회");
     }
 
 
-
-
 }
+

@@ -1,0 +1,69 @@
+Index: src/main/java/com/inyoung/section02/file_char_stream/FileCharDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/inyoung/section02/file_char_stream/FileCharDao.java b/src/main/java/com/inyoung/section02/file_char_stream/FileCharDao.java
+new file mode 100644
+--- /dev/null	(date 1740703483550)
++++ b/src/main/java/com/inyoung/section02/file_char_stream/FileCharDao.java	(date 1740703483550)
+@@ -0,0 +1,44 @@
++package com.inyoung.section02.file_char_stream;
++
++import javax.swing.text.TabableView;
++import java.io.FileWriter;
++import java.io.IOException;
++
++public class FileCharDao {
++
++    /*
++        # FileWriter / FileReader #
++        - File : 파일과 연결되는 기반 스트림
++        - Writer / Reader : 데이터를 2바이트 단위로 입출력하는 문자스트림
++     */
++
++    public void fileSave() {
++        // FileWriter
++
++        FileWriter fw = null;
++        try {
++            // 1. 스트림 생성
++            fw = new FileWriter("b_char.txt");
++
++            // 2. 데이터 출력 (2바이트 단위로 데이터 전송)
++            fw.write(54616); // '하'
++            fw.write("재밌다.");
++
++            char[] arr = new char[]{'a', 'b', 'c'};
++            fw.write(arr);
++
++        } catch (IOException e) {
++            e.printStackTrace();
++        } finally {
++            if(fw != null){
++                try {
++                    fw.close();
++                } catch (IOException e) {
++                    e.printStackTrace();
++                }
++            }
++        }
++    }
++
++    
++}
+\ No newline at end of file
+Index: src/main/java/com/inyoung/section02/file_char_stream/Application.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/inyoung/section02/file_char_stream/Application.java b/src/main/java/com/inyoung/section02/file_char_stream/Application.java
+new file mode 100644
+--- /dev/null	(date 1740702849417)
++++ b/src/main/java/com/inyoung/section02/file_char_stream/Application.java	(date 1740702849417)
+@@ -0,0 +1,4 @@
++package com.inyoung.section02.file_char_stream;
++
++public class Application {
++}
