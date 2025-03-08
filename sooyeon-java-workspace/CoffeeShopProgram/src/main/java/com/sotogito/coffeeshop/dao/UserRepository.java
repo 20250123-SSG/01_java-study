@@ -1,5 +1,6 @@
 package com.sotogito.coffeeshop.dao;
 
+import com.sotogito.coffeeshop.exception.DuplicateIdException;
 import com.sotogito.coffeeshop.model.User;
 
 import java.util.*;
@@ -18,7 +19,7 @@ public class UserRepository {
 
     public void addUser(User user) {
         if (users.contains(user)) {
-            throw new IllegalArgumentException("아이디가 중복되었습니다.");
+            throw new DuplicateIdException("아이디가 중복되었습니다.");
         }
         users.add(user);
     }

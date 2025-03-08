@@ -6,21 +6,12 @@ import com.sotogito.coffeeshop.model.Shop;
 import java.util.List;
 
 public class ShopProductManager {
-    ;
     private final Shop shop;
-    private int minimumPrice = 0;
+    private int minimumPrice;
 
     public ShopProductManager(Shop shop) {
         this.shop = shop;
         minimumPrice = this.shop.findMinimumPrice();
-    }
-
-    public List<Product> getCoffeeList() {
-        return shop.getCoffees();
-    }
-
-    public List<Product> getBreadList() {
-        return shop.getBreads();
     }
 
     public void addNewCoffeeProduct(Product product) {
@@ -36,6 +27,14 @@ public class ShopProductManager {
 
     public int getMinimumPrice() {
         return minimumPrice;
+    }
+
+    public List<Product> getCoffeeList() {
+        return shop.getCoffees();
+    }
+
+    public List<Product> getBreadList() {
+        return shop.getBreads();
     }
 
 }

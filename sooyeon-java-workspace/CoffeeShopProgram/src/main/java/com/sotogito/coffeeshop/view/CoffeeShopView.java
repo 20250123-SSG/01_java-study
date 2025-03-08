@@ -4,9 +4,11 @@ import com.sotogito.coffeeshop.controller.AdministratorController;
 import com.sotogito.coffeeshop.controller.ShopController;
 import com.sotogito.coffeeshop.controller.UserController;
 import com.sotogito.coffeeshop.dao.*;
+import com.sotogito.coffeeshop.exception.DuplicateIdException;
 import com.sotogito.coffeeshop.model.Shop;
 import com.sotogito.coffeeshop.model.User;
 
+import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -57,27 +59,33 @@ public class CoffeeShopView {
         }
     }
 
-    private User getUser(String id, String pwd) { //fixme view에 두는게 맞나?
+    private User getUser(String id, String pwd) {
         Optional<User> foundUser = shopController.login(id, pwd);
 
         if (foundUser.isEmpty()) {
-            User newUser = createUser();
-            shopController.join(newUser);
-            return newUser;
+            return createUser();
         }
         return foundUser.get();
     }
 
     private User createUser() {
-        System.out.println("가입하세요");
-        System.out.println("아이디, 비번, 이름, 충전금액을 순서대로 입력하세요.");
-        String id = scanner.nextLine();
-        String pwd = scanner.nextLine();
-        String name = scanner.nextLine();
-        int amount = scanner.nextInt();
-        scanner.nextLine();
+        while (true) {
+            try {
+                System.out.println("가입하세요");
+                System.out.println("아이디, 비번, 이름, 충전금액을 순서대로 입력하세요.");
+                String id = scanner.nextLine();
+                String pwd = scanner.nextLine();
+                String name = scanner.nextLine();
+                int amount = Integer.parseInt(scanner.nextLine());
 
-        return new User(id, pwd, name, amount);
+                return shopController.join(id, pwd, name, amount);
+
+            } catch (DuplicateIdException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("충전 금액은 숫자로 입력해주세요.");
+            }
+        }
     }
 
 }

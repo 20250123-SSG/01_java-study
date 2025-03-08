@@ -21,8 +21,10 @@ public class ShopController {
         return shopUserRepository.findByIdAndPassword(id, password);
     }
 
-    public void join(User user) {
-        shopUserRepository.addUser(user);
+    public User join(String id, String password, String name, int amount) {
+        User newUser = new User(id, password, name, amount);
+        shopUserRepository.addUser(newUser);
+        return newUser;
     }
 
     public List<Product> getCoffeeList() {

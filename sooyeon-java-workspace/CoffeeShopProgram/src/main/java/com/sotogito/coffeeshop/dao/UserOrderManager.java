@@ -7,9 +7,7 @@ import com.sotogito.coffeeshop.model.User;
 
 
 public class UserOrderManager {
-    //user객체를 어디에 저정하기
 
-    //이거를 이렇게 거쳐갈 필요가 있나
     public void chargeAmount(User user, int amount) {
         user.chargeAmount(amount);
     }

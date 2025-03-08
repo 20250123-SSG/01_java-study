@@ -19,11 +19,15 @@ public class UserController {
     }
 
     public void order(User user, String productName) {
-        userOrderManager.validateZeroAmount(user);
-        userOrderManager.validateOverAmountByMinProduct(user, shopProductManager.getMinimumPrice());
+        validateCanPurchaseStatus(user);
 
         Product product = shopProductManager.findProductByName(productName);
         userOrderManager.orderByOne(user, product);
+    }
+
+    public void validateCanPurchaseStatus(User user) {
+        userOrderManager.validateZeroAmount(user);
+        userOrderManager.validateOverAmountByMinProduct(user, shopProductManager.getMinimumPrice());
     }
 
 }

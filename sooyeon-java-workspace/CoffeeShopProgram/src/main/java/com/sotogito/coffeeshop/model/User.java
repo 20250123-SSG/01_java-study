@@ -1,5 +1,6 @@
 package com.sotogito.coffeeshop.model;
 
+import com.sotogito.coffeeshop.exception.MinimumChargeException;
 import com.sotogito.coffeeshop.exception.UserAmountShortException;
 
 import java.util.*;
@@ -40,7 +41,7 @@ public class User {
 
     public void chargeAmount(int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("1원 이상 입력해주세요.");
+            throw new MinimumChargeException("1원 이상 입력해주세요.");
         }
         this.amount += amount;
     }
