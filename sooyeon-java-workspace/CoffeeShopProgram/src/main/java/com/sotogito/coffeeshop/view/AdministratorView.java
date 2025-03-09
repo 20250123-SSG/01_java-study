@@ -2,15 +2,13 @@ package com.sotogito.coffeeshop.view;
 
 import com.sotogito.coffeeshop.controller.AdministratorController;
 import com.sotogito.coffeeshop.controller.ShopController;
+import com.sotogito.coffeeshop.dao.Sales;
 import com.sotogito.coffeeshop.exception.DuplicateProductException;
 import com.sotogito.coffeeshop.exception.ProductInformationUpdateException;
-import com.sotogito.coffeeshop.model.Bread;
-import com.sotogito.coffeeshop.model.Coffee;
-import com.sotogito.coffeeshop.model.Shop;
-import com.sotogito.coffeeshop.model.User;
+import com.sotogito.coffeeshop.model.*;
 import org.w3c.dom.css.CSS2Properties;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class AdministratorView {
     private final Scanner sc = new Scanner(System.in);
@@ -44,9 +42,58 @@ public class AdministratorView {
                 case 2:
                     manageShopProduct();
                     break;
+                case 3:
+                    manageShopSales();
+                    break;
+
             }
         }
     }
+
+    public void manageShopSales() {
+        System.out.println("=====가게 매출 관리 페이지=====");
+        while (true) {
+            System.out.println("""
+                    1. 전체 판매 내역 조회
+                    2. 특정 고객 구매 내역 조회
+                    0. 뒤로가기
+                    """);
+            int functionNum = Integer.parseInt(sc.nextLine());
+
+            if (functionNum == 0) {
+                return;
+            }
+            if (functionNum == 1) {
+                System.out.println(Sales.SALES);
+            } else if (functionNum == 2) {
+                showUserPurchaseHistory();
+            }
+
+        }
+    }
+
+    public void showUserPurchaseHistory() {
+        System.out.println("조회하고 싶은 회원의 id를 입력하세요.");
+        String id = sc.nextLine();
+
+        Optional<User> user = shopController.findUserById(id);
+        if (user.isEmpty()) {
+            System.out.println("존재하지 않는 회원입니다.");
+            return;
+        }
+        Map<Product, Integer> orders = user.get().getOrders();
+
+        if (orders.isEmpty()) {
+            System.out.println("주문 내역이 없습니다.");
+            return;
+        }
+        for (Map.Entry<Product, Integer> entry : orders.entrySet()) {
+            String productName = entry.getKey().getName();
+            int count = entry.getValue();
+            System.out.printf("%s : %d개\n", productName, count);
+        }
+    }
+
 
     public void manageShopProduct() {
         System.out.println("=====가게 상품 관리 페이지=====");
@@ -60,13 +107,13 @@ public class AdministratorView {
                     """);
             int functionNum = Integer.parseInt(sc.nextLine());
 
-            if(functionNum == 0){
+            if (functionNum == 0) {
                 return;
             }
 
             if (functionNum == 1) {
                 shopController.getCoffeeList().forEach(System.out::println);
-            }else if (functionNum == 2) {
+            } else if (functionNum == 2) {
                 shopController.getBreadList().forEach(System.out::println);
             } else {
                 addNewProduct(functionNum);
@@ -74,44 +121,44 @@ public class AdministratorView {
         }
     }
 
-    public void addNewProduct(int functionNum){
-        try{
+    public void addNewProduct(int functionNum) {
+        try {
             if (functionNum == 3) {
                 addNewCoffeeProduct();
-            }else if (functionNum == 4) {
+            } else if (functionNum == 4) {
                 addNewBreadProduct();
             }
-        }catch (DuplicateProductException | ProductInformationUpdateException e){
+        } catch (DuplicateProductException | ProductInformationUpdateException e) {
             System.out.println(e.getMessage());
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("가격은 숫자로 입력해주세요.");
         }
     }
 
-    public void addNewBreadProduct(){
+    public void addNewBreadProduct() {
         System.out.println("추가할 빵의 이름과 가격을 입력하세요.");
-        try{
+        try {
             String name = sc.nextLine();
             int price = Integer.parseInt(sc.nextLine());
 
-            administratorController.addNewProduct(new Bread(name,price));
-        }catch (DuplicateProductException e){
+            administratorController.addNewProduct(new Bread(name, price));
+        } catch (DuplicateProductException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void addNewCoffeeProduct(){
+    public void addNewCoffeeProduct() {
         System.out.println("추가할 커피의 이름과 가격을 입력하세요.");
-        try{
+        try {
             String name = sc.nextLine();
             int price = Integer.parseInt(sc.nextLine());
 
-            administratorController.addNewProduct(new Coffee(name,price));
-        }catch (DuplicateProductException e){
+            administratorController.addNewProduct(new Coffee(name, price));
+        } catch (DuplicateProductException e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public void manageShopInformation() {
         System.out.println("=====가게 정보 관리 페이지=====");
         while (true) {

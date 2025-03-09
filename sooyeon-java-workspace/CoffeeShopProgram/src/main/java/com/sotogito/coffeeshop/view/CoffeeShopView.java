@@ -9,6 +9,7 @@ import com.sotogito.coffeeshop.model.Shop;
 import com.sotogito.coffeeshop.model.User;
 
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -41,14 +42,19 @@ public class CoffeeShopView {
     }
 
     public void run() {
-        System.out.println("아이디 비번을 입력하세요. ");
-        String id = scanner.nextLine();
-        String pwd = scanner.nextLine();
+        while (true) {
+            System.out.println("아이디 비번을 입력하세요. (완전히 종료하고 싶으면 -> 0 <- 을 입력하시오)");
+            String id = scanner.nextLine();
+            String pwd = scanner.nextLine();
 
-        User user = getUser(id, pwd);
-        System.out.printf("%s님 안녕하세요.\n", user.getName());
+            if(Objects.equals(id, "0") || pwd.equals("0")){
+                return;
+            }
+            User user = getUser(id, pwd);
+            System.out.printf("%s님 안녕하세요.\n", user.getName());
 
-        checkAdmin(user);
+            checkAdmin(user);
+        }
     }
 
     public void checkAdmin(User user) {

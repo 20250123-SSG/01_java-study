@@ -1,5 +1,6 @@
 package com.sotogito.coffeeshop.controller;
 
+import com.sotogito.coffeeshop.dao.Sales;
 import com.sotogito.coffeeshop.dao.ShopProductManager;
 import com.sotogito.coffeeshop.dao.UserOrderManager;
 import com.sotogito.coffeeshop.model.Product;
@@ -23,6 +24,7 @@ public class UserController {
 
         Product product = shopProductManager.findProductByName(productName);
         userOrderManager.orderByOne(user, product);
+        Sales.SALES.add(product);
     }
 
     public void validateCanPurchaseStatus(User user) {

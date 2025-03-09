@@ -30,4 +30,10 @@ public class UserRepository {
                 .findAny();
     }
 
+    public Optional<User> findById(String id) {
+        return users.stream()
+                .filter(user -> user.getId().equals(id))
+                .findAny();
+    }
+
 }

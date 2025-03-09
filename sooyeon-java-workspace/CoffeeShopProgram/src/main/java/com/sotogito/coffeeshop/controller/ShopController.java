@@ -27,6 +27,10 @@ public class ShopController {
         return newUser;
     }
 
+    public Optional<User> findUserById(String id) {
+        return userRepository.findById(id);
+    }
+
     public List<Product> getCoffeeList() {
         return shopProductManager.getCoffeeList();
     }
