@@ -13,6 +13,10 @@ public class ShopInformationEditor {
         return shop;
     }
 
+    public Shop getOriginalShop() {
+        return shop.getOriginalShopContainInfo();
+    }
+
     public void editShopName(String newName) {
         shop.setName(newName);
     }

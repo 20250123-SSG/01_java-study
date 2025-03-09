@@ -107,4 +107,15 @@ public class Shop {
         this.address = address;
     }
 
+    public Shop getOriginalShopContainInfo(){
+        return new Shop(masterId, name, address);
+    }
+
+    @Override
+    public String toString() {
+        return "Shop{" +
+                "masterId=" + masterId +
+                ", name='" + name + '\'' +
+                ", address='" + address ;
+    }
 }

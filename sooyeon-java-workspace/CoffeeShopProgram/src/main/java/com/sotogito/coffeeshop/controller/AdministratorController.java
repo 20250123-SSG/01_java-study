@@ -21,6 +21,10 @@ public class AdministratorController {
         return shopInformationManager.getShop();
     }
 
+    public Shop getOriginShop(){
+        return shopInformationManager.getOriginalShop();
+    }
+
     public void editShopName(String newName) {
         shopInformationManager.editShopName(newName);
     }

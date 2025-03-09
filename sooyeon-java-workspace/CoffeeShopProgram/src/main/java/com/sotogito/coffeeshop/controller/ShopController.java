@@ -10,20 +10,20 @@ import java.util.Optional;
 
 public class ShopController {
     private final ShopProductManager shopProductManager;
-    private final UserRepository shopUserRepository;
+    private final UserRepository userRepository;
 
     public ShopController(ShopProductManager shopProductManager, UserRepository shopUserRepository) {
         this.shopProductManager = shopProductManager;
-        this.shopUserRepository = shopUserRepository;
+        this.userRepository = shopUserRepository;
     }
 
     public Optional<User> login(String id, String password) {
-        return shopUserRepository.findByIdAndPassword(id, password);
+        return userRepository.findByIdAndPassword(id, password);
     }
 
     public User join(String id, String password, String name, int amount) {
         User newUser = new User(id, password, name, amount);
-        shopUserRepository.addUser(newUser);
+        userRepository.addUser(newUser);
         return newUser;
     }
 
