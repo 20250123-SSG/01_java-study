@@ -2,8 +2,13 @@ package com.sotogito.coffeeshop.view;
 
 import com.sotogito.coffeeshop.controller.AdministratorController;
 import com.sotogito.coffeeshop.controller.ShopController;
+import com.sotogito.coffeeshop.exception.DuplicateProductException;
+import com.sotogito.coffeeshop.exception.ProductInformationUpdateException;
+import com.sotogito.coffeeshop.model.Bread;
+import com.sotogito.coffeeshop.model.Coffee;
 import com.sotogito.coffeeshop.model.Shop;
 import com.sotogito.coffeeshop.model.User;
+import org.w3c.dom.css.CSS2Properties;
 
 import java.util.Scanner;
 
@@ -20,10 +25,94 @@ public class AdministratorView {
 
     public void run(User user) {
         System.out.println("관리자 페이지입니다.");
-        manageShopInformation(user);
+        while (true) {
+            System.out.println("""
+                    1. 가게 정보 관리
+                    2. 가게 상품 관리
+                    3. 가게 매출 관리
+                    0. 종료하기
+                    """);
+            int functionNum = Integer.parseInt(sc.nextLine());
+
+            if (functionNum == 0) {
+                return;
+            }
+            switch (functionNum) {
+                case 1:
+                    manageShopInformation();
+                    break;
+                case 2:
+                    manageShopProduct();
+                    break;
+            }
+        }
     }
 
-    public void manageShopInformation(User user) {
+    public void manageShopProduct() {
+        System.out.println("=====가게 상품 관리 페이지=====");
+        while (true) {
+            System.out.println("""
+                    1. 판매중인 커피 목록 조회
+                    2. 판매중인 빵 목록 조회
+                    3. 신규 커피 메뉴 추가
+                    4. 신규 빵 메뉴 추가
+                    0. 뒤로가기
+                    """);
+            int functionNum = Integer.parseInt(sc.nextLine());
+
+            if(functionNum == 0){
+                return;
+            }
+
+            if (functionNum == 1) {
+                shopController.getCoffeeList().forEach(System.out::println);
+            }else if (functionNum == 2) {
+                shopController.getBreadList().forEach(System.out::println);
+            } else {
+                addNewProduct(functionNum);
+            }
+        }
+    }
+
+    public void addNewProduct(int functionNum){
+        try{
+            if (functionNum == 3) {
+                addNewCoffeeProduct();
+            }else if (functionNum == 4) {
+                addNewBreadProduct();
+            }
+        }catch (DuplicateProductException | ProductInformationUpdateException e){
+            System.out.println(e.getMessage());
+        } catch (NumberFormatException e){
+            System.out.println("가격은 숫자로 입력해주세요.");
+        }
+    }
+
+    public void addNewBreadProduct(){
+        System.out.println("추가할 빵의 이름과 가격을 입력하세요.");
+        try{
+            String name = sc.nextLine();
+            int price = Integer.parseInt(sc.nextLine());
+
+            administratorController.addNewProduct(new Bread(name,price));
+        }catch (DuplicateProductException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void addNewCoffeeProduct(){
+        System.out.println("추가할 커피의 이름과 가격을 입력하세요.");
+        try{
+            String name = sc.nextLine();
+            int price = Integer.parseInt(sc.nextLine());
+
+            administratorController.addNewProduct(new Coffee(name,price));
+        }catch (DuplicateProductException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void manageShopInformation() {
         System.out.println("=====가게 정보 관리 페이지=====");
         while (true) {
             System.out.println("""
@@ -31,7 +120,7 @@ public class AdministratorView {
                     2. 가게 이름 수정
                     3. 가게 주소 수정
                     4. 가게 마스터 id 수정
-                    0. 종료하기
+                    0. 뒤로가기
                     """);
             try {
                 int functionNum = Integer.parseInt(sc.nextLine());
@@ -39,8 +128,9 @@ public class AdministratorView {
                 if (functionNum == 0) {
                     return;
                 }
+
                 if (functionNum == 1) {
-                    printShopInformation();
+                    System.out.println(administratorController.getShop());
                 } else {
                     editShopInformation(functionNum);
                 }
@@ -85,10 +175,6 @@ public class AdministratorView {
         int newMasterId = Integer.parseInt(sc.nextLine());
 
         administratorController.editShopMasterId(newMasterId);
-    }
-
-    public void printShopInformation() {
-        System.out.println(administratorController.getShop());
     }
 
 }

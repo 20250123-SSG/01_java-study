@@ -1,6 +1,7 @@
 package com.sotogito.coffeeshop.model;
 
 import com.sotogito.coffeeshop.common.ProductType;
+import com.sotogito.coffeeshop.exception.DuplicateProductException;
 import com.sotogito.coffeeshop.exception.NoSuchProductException;
 
 import javax.swing.plaf.PanelUI;
@@ -43,7 +44,7 @@ public class Shop {
             result.add(product);
             return;
         }
-        throw new IllegalArgumentException("이미 존재하는 상품입니다.");
+        throw new DuplicateProductException("이미 존재하는 상품입니다.");
     }
 
     public void removeProduct(Product product) {

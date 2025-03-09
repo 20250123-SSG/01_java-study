@@ -37,8 +37,8 @@ public class AdministratorController {
         shopInformationManager.editShopMasterId(newMasterId);
     }
 
-    public void addNewCoffeeProduct(Product product) {
-        shopProductManager.addNewCoffeeProduct(product);
+    public void addNewProduct(Product product) {
+        shopProductManager.addNewProduct(product);
     }
 
 }

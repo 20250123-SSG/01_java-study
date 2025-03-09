@@ -14,7 +14,7 @@ public class ShopProductManager {
         minimumPrice = this.shop.findMinimumPrice();
     }
 
-    public void addNewCoffeeProduct(Product product) {
+    public void addNewProduct(Product product) {
         if (product.getPrice() < minimumPrice) {
             minimumPrice = product.getPrice();
         }
