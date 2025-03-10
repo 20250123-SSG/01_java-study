@@ -1,5 +1,6 @@
 package com.jjanggu.practice.controller;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ArrayPractice {
@@ -223,10 +224,10 @@ public class ArrayPractice {
     public void practice13() {
         Scanner sc = new Scanner(System.in);
         System.out.println("배열의 크기 입력 : ");
-        int num1 = sc.nextInt();
+        int arrSize = sc.nextInt();
         sc.nextLine();
 
-        String[] arr = new String[num1];
+        String[] arr = new String[arrSize];
         for(int i = 0; i < arr.length; i++) {
             System.out.println((i + 1) + "번째 문자열 : ");
             arr[i] = sc.nextLine();
@@ -239,30 +240,65 @@ public class ArrayPractice {
             System.out.println("더 값을 입력하시겠습니까?(Y/N)");
             char ans = sc.nextLine().charAt(0);
 
-            if(ans == 'Y' || ans =='y') {
-                System.out.println("더 입력하고 싶은 개수 : ");
-                int num2 = sc.nextInt();
-                String[] copy = new String[num1+num2];
-                System.arraycopy(arr, 0, copy, 0, num1);
 
-                for(int i = num1 ; i < copy.length; i++){
-                    System.out.println((i + 1) + "번째 문자열 : ");
-                    copy[i] = sc.nextLine();
+            if(ans == 'n' || ans == 'N'){
+                System.out.println(Arrays.toString(arr));
+                break;
+            } else if (ans == 'y' || ans == 'Y') {
+                System.out.print("더 입력하고 싶은 개수 : ");
+                int addSize = sc.nextInt();
+                sc.nextLine();
+
+
+
+                // 새로운 빈 배열 newArr을 생성해서 코드를 다 돌린 후 arr =newArr 선언
+                String[] newArr = new String[arr.length + addSize];
+
+                for(int i = 0; i < newArr.length; i++){
+
+                    if(i< arr.length){
+                        newArr[i] = arr[i];
+                    }else{
+                        System.out.print((i +1) + "번째 문자열: ");
+                        newArr[i] = sc.nextLine();
+                    }
+
                 }
-
-
-
-            } else if (ans == 'N' || ans == 'n') {
-                for(int i =0; i < arr.length; i++){
-                    System.out.print(arr[i] + " ");
-                }break;
+                arr = newArr;
             }
         }
-
-
-
-
-
-
     }
+
+    public void practice14() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("월 : ");
+        int month = sc.nextInt();
+        sc.nextLine();
+
+        String[] seasons = {"겨울", "봄", "여름", "가을"}; //겨울 12,1,2/ 봄 3,4,5/여름 6,7,8 /가을 9,10,11
+
+        System.out.println(seasons[(month%12)/3]);
+    }
+
+    public void practice15() {
+        int[] a = {10, 20, 30, 0, 0, 0};
+        int[] b = {40, 50, 60};
+
+        // for문
+        /*
+        for(int i = 0; i < a.length; i++){
+            if(i<b.length){
+                a[i] = a[i];
+            }else{
+                a[i] = b[i-3];
+            }
+        }
+         */
+
+        // arraycopy문
+        System.arraycopy(b, 0 , a, 3, 3);
+        System.out.println(Arrays.toString(a));
+    }
+
 }

@@ -286,11 +286,51 @@ public class LoopPractice {
             k=j*70;
             System.out.printf("%d회 모금액 : %d원\n",j,k);
         }
+        System.out.println("\n총 모금횟수: " + ((10000/70)+1) + "회");
         System.out.println("----------------");
-
     }
 
+    public void star1() {
 
+        Scanner sc = new Scanner(System.in);
 
+        System.out.println("정수 입력 : ");
+        int num = sc.nextInt();
 
+        if(num > 0) {
+            for (int i = 1; i < num + 1; i++) {
+                for (int j = 0; j < i; j++) {
+                    System.out.print("*");
+                }
+                System.out.println();
+            }
+        }else{
+            System.out.println("옳지 않은 값입니다.");
+        }
+    }
+
+    public void star2() {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("정수 입력 : ");
+        int num = sc.nextInt();
+
+        if(num > 0) {
+            for (int i = num; i > 0; i--) {
+                for (int j = 0; j < i; j++) {
+                    System.out.print("*");
+                }
+                System.out.println();
+            }
+        }else{
+            System.out.println("옳지 않은 값입니다.");
+        }
+    }
+
+    public void star3() {
+
+        for( int i = 10; i < ; )
+
+    }
 }

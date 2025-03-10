@@ -2,8 +2,12 @@ package section02.list.controller;
 
 import section02.list.dto.Music;
 
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
 
 public class MusicController {
     private List<Music> musics = new ArrayList<>();
@@ -60,20 +64,19 @@ public class MusicController {
         for (int i = 0; i < musics.size(); i++) {
             if (musics.get(i).getTitle().equals(title)) {
                 musics.remove(musics.get(i));
-               // musics.remove(i);
+                // musics.remove(i);
                 result++;
             }
         }
 
 
-
         return result;
     }
 
-    public int editMusic(String title, String artist,String editTitle) {
+    public int editMusic(String title, String artist, String editTitle) {
         int result = 0;
-        for(Music m : musics) {
-            if(m.getTitle().equals(title) && m.getArtist().equals(artist)) {
+        for (Music m : musics) {
+            if (m.getTitle().equals(title) && m.getArtist().equals(artist)) {
                 m.setTitle(editTitle);
                 result++;
                 break;
@@ -81,5 +84,71 @@ public class MusicController {
         }
         return result;
     }
+
+    public List<Music> findMusicByTitle(String keyword) {
+        List<Music> result = new ArrayList<>();
+        for (Music m : musics) {
+            if (m.getTitle().contains(keyword)) {
+                result.add(m);
+            }
+        }
+        return result;
+    }
+
+    public List<Music> findMusicByArtist(String artist) {
+        List<Music> result = new ArrayList<>();
+
+        for (Music m : musics) {
+            if (m.getArtist().contains(artist)) {
+                result.add(m);
+            }
+        }
+//        return musics.stream()
+//                .filter(m -> m.getArtist().contains(artist))
+//                .collect(Collectors.toList());
+        return result;
+    }
+
+    public int findMusicCount(String title) {
+        int count = 0;
+
+        for (Music m : musics) {
+            if (m.getTitle().contains(title)) {
+                count++;
+            }
+        }
+//       count += (int) musics.stream()
+//                .filter((m) -> m.getTitle().equals(title))
+//                .count();
+        return count;
+    }
+
+    public List<Music> sortMusic(int sortType) {
+        /**
+         * Collections.sort(리스트) : 클래스에 정의된 compareTo를 기준으로 정렬,원본 객체가 정렬됨
+         * Collections.sort(리스크,Comparator객체) : 따로 생성한 Comparator객체를 넘겨 정렬, 외부에서 다양한 정렬 기준을 넘김
+         * 리스트.sort(Comparator객체) : 위와 동작 방식은 똑같음. 더 최신
+         */
+        List<Music> copy = new ArrayList<>(musics);
+
+        if (sortType == 1 || sortType == 2) {
+//            copy.sort(new Comparator<Music>() {
+//                @Override
+//                public int compare(Music o1, Music o2) {
+//                    return o1.getTitle().compareTo(o2.getTitle());
+//                }
+//            });
+            copy.sort(Comparator.comparing(Music::getTitle));
+        } else if (sortType == 3 || sortType == 4) { //else if 로해야 효율적
+            copy.sort(Comparator.comparing(Music::getArtist));
+        }
+
+        if (sortType == 2 || sortType == 4) {
+            Collections.reverse(copy);
+        }
+
+        return copy;
+    }
+
 }
 

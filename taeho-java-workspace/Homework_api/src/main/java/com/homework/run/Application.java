@@ -9,9 +9,5 @@ public class Application {
 		
 		Menu m = new Menu();
 		m.mainMenu(); // 메인메뉴가 제일먼저 실행되면서 프로그램이 시작된다.
-		String s = "012";
-		System.out.println(s.substring(0,1));
-		
 	}
-
 }

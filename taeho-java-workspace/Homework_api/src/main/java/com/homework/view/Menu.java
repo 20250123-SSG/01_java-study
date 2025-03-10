@@ -96,6 +96,8 @@ public class Menu {
                 String str = sc.nextLine();
                 String result = calc.toSpaceUpper(str);
                 System.out.println(result);
+                String test = calc.toSpaceUpperTest(str);
+                System.out.println(test);
 
             } else if (menu == 4) {
 
@@ -190,6 +192,7 @@ public class Menu {
 
                 System.out.println("\n* 현재 시스템 날짜 및 시간 *\n");
                 calc.printNowDateTime();
+                calc.printNowDateTimeTest();
 
                 // Calculator 클래스의 printNowDateTime 메소드 호출하기
 

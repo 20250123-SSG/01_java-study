@@ -21,11 +21,21 @@ public class BookController {
 
         // list배열에 존재하는 Book객체의 정보 출력하는 구문 작성하시오.
         // 1) for loop문 방법
-        /*for(int i = 0; i < list.length; i++) {
+        /*
+        for(int i=0; i<list.length; i++) { // 0번 인덱스부터 마지막인덱스(4)까지 순차적으로 접근하면서 출력
+        //System.out.println(list[i]); // 이렇게 바로 출력하면.. 마지막 인덱스는 아직 Book객체가 담겨있지 않기 때문에 null 출력됨!!
+
+        if(list[i] != null) { // 따라서 해당 list[i]가 null이 아닐 경우(즉, Book객체 담겨있을 경우)만 출력될 수 있도록 조건처리 필요!
             System.out.println(list[i]);
-        }*/
+        }
+        */
         // 2) for each문 방법 (향상된 for문)
         for(Book book : list){
+
+            // 마지막 인덱스(null)일 경우, break
+            if(book == null){
+                break;
+            }
             System.out.println(book);
         }
     }
@@ -40,6 +50,7 @@ public class BookController {
 					   Hint. Split 또는 StringTokenizer 와 파싱을 적절히 활용해볼것
 					2. 전달된 가격값 또한 문자열 이므로 어떻게 Book객체의 int 타입 필드에 반영시킬건지 고려해보기.
 				*/
+
 
     }
 

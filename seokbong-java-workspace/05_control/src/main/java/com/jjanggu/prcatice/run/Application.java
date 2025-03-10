@@ -15,6 +15,9 @@ public class Application {
 //        cp.practice5();
 //        cp.practice6();
 //        cp.practice7();
+//        cp.practice8();
+//        cp.practice9();
+//        cp.menuView();
 
 
         LoopPractice lp = new LoopPractice();
@@ -32,7 +35,9 @@ public class Application {
 //        lp.practice11();
 //        lp.practice12();
 //        lp.practice13();
-        lp.practice14();
+//        lp.practice14();
+//        lp.star1();
+//        lp.star2();
 
 
     }

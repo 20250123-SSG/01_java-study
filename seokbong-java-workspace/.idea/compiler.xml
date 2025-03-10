@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="02_variable" target="17" />
+      <module name="02_variable.main" target="17" />
+      <module name="02_variable.test" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

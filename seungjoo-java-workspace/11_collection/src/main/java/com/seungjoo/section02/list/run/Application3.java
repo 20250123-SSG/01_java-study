@@ -56,7 +56,7 @@ public class Application3 {
         System.out.println("==============");
 
         List nonTypeList = Arrays.asList(new Music("술이 달다", "에픽 하이")
-                                        ,new Music("이 밤", "양다일");
+                                        ,new Music("이 밤", "양다일")
                                         ,"끝");
 
         System.out.println(nonTypeList);

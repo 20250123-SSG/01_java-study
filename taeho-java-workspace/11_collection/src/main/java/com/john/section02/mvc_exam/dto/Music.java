@@ -1,6 +1,6 @@
 package com.john.section02.mvc_exam.dto;
 
-public class Music {
+public class Music implements Comparable<Music>{
     private String title;
     private String artist;
 
@@ -16,11 +16,28 @@ public class Music {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
     @Override
     public String toString() {
         return "Music{" +
                 "title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Music other) {
+        return this.title.compareTo(other.title);
     }
 }

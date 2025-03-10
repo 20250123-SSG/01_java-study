@@ -12,7 +12,7 @@ public class Application {
         for(Circle c : circles) {
             c.draw();
         }
-
+        
         for(Rectangle c : rectangles) {
             c.draw();
         }

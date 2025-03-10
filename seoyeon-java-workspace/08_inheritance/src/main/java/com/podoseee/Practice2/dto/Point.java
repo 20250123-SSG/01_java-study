@@ -2,8 +2,8 @@ package com.podoseee.Practice2.dto;
 
 public class Point {
 
-    private static int x;
-    private static int y;
+    private int x;
+    private int y;
 
     public Point(){}
 
