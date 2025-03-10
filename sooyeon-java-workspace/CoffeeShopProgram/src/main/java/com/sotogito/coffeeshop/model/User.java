@@ -1,42 +1,31 @@
 package com.sotogito.coffeeshop.model;
 
+import com.sotogito.coffeeshop.common.Role;
 import com.sotogito.coffeeshop.exception.MinimumChargeException;
 import com.sotogito.coffeeshop.exception.UserAmountShortException;
 
 import java.util.*;
 
 public class User {
-    private String id;
-    private String password;
-    private String name;
-    private int amount;
-    private boolean idAdministrator;
+    private final String id;
+    private final String password;
+    private final String name;
+    private  int amount;
+    private final Role role;
 
-    private final HashMap<Product, Integer> orders = new HashMap<>(); //상품 + 주문 개수
+    private final Cart cart;
 
-    public User() {
-    }
-
-    public User(String id, String password, String name, int amount) {
+    public User(String id, String password, String name, int amount, Role role) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.amount = amount;
-    }
-
-    public User(String id, String password, String name, boolean idAdministrator) {
-        this.id = id;
-        this.password = password;
-        this.name = name;
-        this.idAdministrator = idAdministrator;
+        this.role = role;
+        this.cart = new Cart();
     }
 
     public void addOrder(Product product) {
-        if (orders.containsKey(product)) {
-            orders.put(product, orders.get(product) + 1);
-            return;
-        }
-        orders.put(product, 1);
+        cart.addOrder(product);
     }
 
     public void chargeAmount(int amount) {
@@ -56,7 +45,7 @@ public class User {
     }
 
     public Map<Product, Integer> getOrders() {
-        return Collections.unmodifiableMap(orders);
+       return cart.getOrders();
     }
 
     public boolean isOverAmountThanProductPrice(int price) {
@@ -83,10 +72,9 @@ public class User {
         return amount;
     }
 
-    public boolean isIdAdministrator() {
-        return idAdministrator;
+    public Role getRole() {
+        return role;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -107,7 +95,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", amount=" + amount +
-                ", idAdministrator=" + idAdministrator +
                 '}';
     }
 

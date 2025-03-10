@@ -1,5 +1,6 @@
 package com.sotogito.coffeeshop.view;
 
+import com.sotogito.coffeeshop.common.Role;
 import com.sotogito.coffeeshop.controller.AdministratorController;
 import com.sotogito.coffeeshop.controller.ShopController;
 import com.sotogito.coffeeshop.controller.UserController;
@@ -57,7 +58,7 @@ public class CoffeeShopView {
     }
 
     public void checkAdmin(User user) {
-        if (user.isIdAdministrator()) {
+        if (user.getRole().equals(Role.ADMIN)) {
             administratorView.run(user);
         } else {
             userView.run(user);

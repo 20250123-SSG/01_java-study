@@ -47,3 +47,18 @@
 - 구매 재입력 조건
   - 존재하지 않는 상품일 때
 
+# 컨트롤러의 종류
+1. UserController : 로그인
+	- UserRepository
+   
+2. UserOrderController : 사용자 주문, 잔액
+	- UserOrderManager
+    - ShopProductManager
+
+3. ShopInformationController : 샵 정보 반환 + 수정
+    - SHopInformationManager
+      - ShopInformationEditor
+
+4. ShopProductController
+   - ShopProductManager
+

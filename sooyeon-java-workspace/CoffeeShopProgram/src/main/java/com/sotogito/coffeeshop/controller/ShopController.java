@@ -1,5 +1,6 @@
 package com.sotogito.coffeeshop.controller;
 
+import com.sotogito.coffeeshop.common.Role;
 import com.sotogito.coffeeshop.dao.ShopInformationManager;
 import com.sotogito.coffeeshop.dao.ShopProductManager;
 import com.sotogito.coffeeshop.dao.UserRepository;
@@ -26,7 +27,7 @@ public class ShopController {
     }
 
     public User join(String id, String password, String name, int amount) {
-        User newUser = new User(id, password, name, amount);
+        User newUser = new User(id, password, name, amount, Role.USER);
         userRepository.addUser(newUser);
         return newUser;
     }
