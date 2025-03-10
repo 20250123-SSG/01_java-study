@@ -7,7 +7,7 @@ public class Application {
         ArrayCopy ac = new ArrayCopy();
 //        ac.testShallowArrayCopy();
 //        ac.testDeepArrayCopy1();
-//        ac.testDeepArrayCopy2();
+        ac.testDeepArrayCopy2();
 //        ac.testDeepArrayCopy3();
 //        ac.testDeepArrayCopy4();
 

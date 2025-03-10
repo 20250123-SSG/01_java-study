@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Application {
-    public static void  main(String [] args) throws IOException, NamingException {
+    public static void  main(String [] args) throws IOException {
         NamingTest nt = new NamingTest();
 
         try {
@@ -18,7 +18,7 @@ public class Application {
             nt.isReservedWord(user);
             nt.isSpecialWord(user);
             nt.isNumFirst(user);
-        }catch (Exception e){
+        }catch (NamingException e){
             System.out.println("모든 결과값이 true일 경우 사용가능하다");
             System.out.println("예외발생!!");
             System.out.println(e.getClass().getName());
