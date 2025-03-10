@@ -32,4 +32,8 @@ public class UserController {
         userOrderManager.validateOverAmountByMinProduct(user, shopProductManager.getMinimumPrice());
     }
 
+    public int getUserBalance(User user) {
+        return user.getAmount();
+    }
+
 }

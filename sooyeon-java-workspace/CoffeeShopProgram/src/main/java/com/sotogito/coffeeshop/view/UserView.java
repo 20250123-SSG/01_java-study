@@ -106,6 +106,8 @@ public class UserView {
             try {
                 System.out.println("구매할 상품을 입력해주세요.");
                 System.out.println("구매를 멈추고 싶으면 -> 그만 <- 이라고 입력해주세요");
+                System.out.println("잔액 : "+ userController.getUserBalance(user));
+
                 String input = sc.nextLine().trim();
                 if (input.equals("그만")) {
                     return;
