@@ -45,7 +45,6 @@ public class AdministratorView {
                 case 3:
                     manageShopSales();
                     break;
-
             }
         }
     }
@@ -64,12 +63,17 @@ public class AdministratorView {
                 return;
             }
             if (functionNum == 1) {
-                System.out.println(Sales.SALES);
+                printSalesHistory();
             } else if (functionNum == 2) {
                 showUserPurchaseHistory();
             }
 
         }
+    }
+
+    public void printSalesHistory(){
+        System.out.println(Sales.SALES);
+        System.out.printf(Sales.PRINT_TOTAL_SALES_AMOUNT,Sales.SALES.getTotalSalesAmount());
     }
 
     public void showUserPurchaseHistory() {
@@ -177,7 +181,7 @@ public class AdministratorView {
                 }
 
                 if (functionNum == 1) {
-                    System.out.println(administratorController.getShop());
+                    System.out.println(shopController.getShop());
                 } else {
                     editShopInformation(functionNum);
                 }
@@ -188,7 +192,7 @@ public class AdministratorView {
     }
 
     public void editShopInformation(int functionNum) {
-        Shop originShop = administratorController.getOriginShop();
+        Shop originShop = shopController.getOriginShop();
 
         if (functionNum == 2) {
             editShopName();
@@ -200,7 +204,7 @@ public class AdministratorView {
 
         System.out.println("수정이 완료되었습니다.");
         System.out.println("변경 전 : " + originShop);
-        System.out.println("변경 후 : " + administratorController.getShop());
+        System.out.println("변경 후 : " + shopController.getShop());
     }
 
     public void editShopAddress() {
