@@ -28,18 +28,17 @@ import java.util.StringTokenizer;
 
         @Override
         public void printNowDateTime() {
-            /**
-             * 1. LocalDateTime을 이용하여 현재 날짜 및 시간의 정보를 얻어 출력하는 메소드
-             *    단, "2024-01-04 17:30:05"  과 같은 형식으로 출력될 수 있도록 하시오.
-             *    (toString, replace, substring, indexOf 메소드 모두 사용하여 푸시오)
-             */
-            LocalDateTime dateTime = LocalDateTime.now();
-            System.out.println(dateTime);
+            String now = LocalDateTime.now().toString();
 
+            System.out.println(now
+                    .replace("T", " ")
+                    .substring(0, now.indexOf(".")));
         }
 
         @Override
         public Calendar makeCalendar(String year, String month, String date) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(date));
             return null;
         }
 
@@ -50,6 +49,7 @@ import java.util.StringTokenizer;
 
         @Override
         public boolean isLeapYear(int year) {
+
             return false;
         }
 
