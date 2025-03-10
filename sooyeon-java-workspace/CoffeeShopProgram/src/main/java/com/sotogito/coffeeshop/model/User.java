@@ -53,7 +53,6 @@ public class User {
         }
 
         this.amount -= purchaseAmount;
-        System.out.println(amount);
     }
 
     public Map<Product, Integer> getOrders() {

@@ -2,10 +2,10 @@ package com.sotogito.coffeeshop.dao;
 
 import com.sotogito.coffeeshop.model.Shop;
 
-public class ShopInformationEditor {
+public class ShopInformationManager {
     private final Shop shop;
 
-    public ShopInformationEditor(Shop shop) {
+    public ShopInformationManager(Shop shop) {
         this.shop = shop;
     }
 

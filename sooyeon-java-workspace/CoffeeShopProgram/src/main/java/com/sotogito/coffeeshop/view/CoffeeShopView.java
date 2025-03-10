@@ -8,7 +8,6 @@ import com.sotogito.coffeeshop.exception.DuplicateIdException;
 import com.sotogito.coffeeshop.model.Shop;
 import com.sotogito.coffeeshop.model.User;
 
-import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
@@ -28,13 +27,13 @@ public class CoffeeShopView {
         UserRepository ur = new UserRepository();
         UserOrderManager orderManager = new UserOrderManager();
 
-        ShopInformationEditor shopEditor = new ShopInformationEditor(shop);
+        ShopInformationManager shopInformationManager = new ShopInformationManager(shop);
         ShopProductManager productManager = new ShopProductManager(shop);
         ShopSalesFileMaker fileMaker = new ShopSalesFileMaker();
 
 
-        shopController = new ShopController(productManager, ur);
-        administratorController = new AdministratorController(shopEditor, productManager, fileMaker);
+        shopController = new ShopController(shopInformationManager,productManager, ur);
+        administratorController = new AdministratorController(shopInformationManager, productManager, fileMaker);
         userController = new UserController(orderManager, productManager);
 
         administratorView = new AdministratorView(shopController, administratorController);

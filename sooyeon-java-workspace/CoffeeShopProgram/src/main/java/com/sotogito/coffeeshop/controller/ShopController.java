@@ -1,18 +1,22 @@
 package com.sotogito.coffeeshop.controller;
 
+import com.sotogito.coffeeshop.dao.ShopInformationManager;
 import com.sotogito.coffeeshop.dao.ShopProductManager;
 import com.sotogito.coffeeshop.dao.UserRepository;
 import com.sotogito.coffeeshop.model.Product;
+import com.sotogito.coffeeshop.model.Shop;
 import com.sotogito.coffeeshop.model.User;
 
 import java.util.List;
 import java.util.Optional;
 
 public class ShopController {
+    private final ShopInformationManager shopInformationManager;
     private final ShopProductManager shopProductManager;
     private final UserRepository userRepository;
 
-    public ShopController(ShopProductManager shopProductManager, UserRepository shopUserRepository) {
+    public ShopController(ShopInformationManager shopInformationManager, ShopProductManager shopProductManager, UserRepository shopUserRepository) {
+        this.shopInformationManager = shopInformationManager;
         this.shopProductManager = shopProductManager;
         this.userRepository = shopUserRepository;
     }
@@ -37,6 +41,14 @@ public class ShopController {
 
     public List<Product> getBreadList() {
         return shopProductManager.getBreadList();
+    }
+
+    public Shop getShop() {
+        return shopInformationManager.getShop();
+    }
+
+    public Shop getOriginShop(){
+        return shopInformationManager.getOriginalShop();
     }
 
 }
