@@ -21,6 +21,10 @@ public class ShopProductManager {
         shop.addProduct(product);
     }
 
+    public void deleteProductByName(String productName) {
+        shop.removeProduct(shop.findProductByName(productName));
+    }
+
     public Product findProductByName(String name) {
         return shop.findProductByName(name);
     }

@@ -16,8 +16,8 @@ public class ShopProductController {
         shopProductManager.addNewProduct(product);
     }
 
-    public void deleteProduct(Product product) {
-
+    public void deleteProductByName(String productName) {
+        shopProductManager.deleteProductByName(productName);
     }
 
     public List<Product> getCoffeeList() {
