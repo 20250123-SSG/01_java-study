@@ -41,6 +41,18 @@ public class Practice2 {
 
         }
 
+        /*
+        // 강사님 코드
+        String[] shops = shopCsv.split(("\n"));
+        Shop[] shopArr = new Shop[shops.length];
+        for(int i=0; i<shops.length; i++) { // shops[i] == "가게번호,상호명,주소,.."
+            String[] arr = shops[i].split(",");
+            shopArr[i] = new Shop(arr[0], arr[1], arr[2], arr[3], arr[4]);
+        }
+        for(Shop s : shopArr){
+            System.out.println(s);
+        }
+         */
 
     }
 }
