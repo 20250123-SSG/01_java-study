@@ -1,7 +1,6 @@
-package com.sotogito.coffeeshop.controller2;
+package com.sotogito.coffeeshop.controller;
 
 import com.sotogito.coffeeshop.dao.ShopInformationManager;
-import com.sotogito.coffeeshop.model.Product;
 import com.sotogito.coffeeshop.model.Shop;
 
 public class ShopInformationController {

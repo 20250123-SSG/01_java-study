@@ -1,39 +1,30 @@
 package com.sotogito.coffeeshop.controller;
 
-import com.sotogito.coffeeshop.dao.Sales;
-import com.sotogito.coffeeshop.dao.ShopProductManager;
-import com.sotogito.coffeeshop.dao.UserOrderManager;
-import com.sotogito.coffeeshop.model.Product;
+import com.sotogito.coffeeshop.common.Role;
+import com.sotogito.coffeeshop.dao.UserRepository;
 import com.sotogito.coffeeshop.model.User;
 
+import java.util.Optional;
+
 public class UserController {
-    private final UserOrderManager userOrderManager;
-    private final ShopProductManager shopProductManager;
+    private final UserRepository userRepository;
 
-    public UserController(UserOrderManager userOrderManager, ShopProductManager shopProductManager) {
-        this.userOrderManager = userOrderManager;
-        this.shopProductManager = shopProductManager;
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public void changeAmount(User user, int amount) {
-        userOrderManager.chargeAmount(user, amount);
+    public Optional<User> login(String id, String password) {
+        return userRepository.findByIdAndPassword(id, password);
     }
 
-    public void order(User user, String productName) {
-        validateCanPurchaseStatus(user);
-
-        Product product = shopProductManager.findProductByName(productName);
-        userOrderManager.orderByOne(user, product);
-        Sales.SALES.add(product);
+    public User join(String id, String password, String name, int amount) {
+        User newUser = new User(id, password, name, amount, Role.USER);
+        userRepository.addUser(newUser);
+        return newUser;
     }
 
-    public void validateCanPurchaseStatus(User user) {
-        userOrderManager.validateZeroAmount(user);
-        userOrderManager.validateOverAmountByMinProduct(user, shopProductManager.getMinimumPrice());
-    }
-
-    public int getUserBalance(User user) {
-        return user.getAmount();
+    public Optional<User> findUserById(String id) {
+        return userRepository.findById(id);
     }
 
 }

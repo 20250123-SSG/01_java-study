@@ -1,4 +1,4 @@
-package com.sotogito.coffeeshop.controller2;
+package com.sotogito.coffeeshop.controller;
 
 import com.sotogito.coffeeshop.dao.Sales;
 import com.sotogito.coffeeshop.dao.ShopProductManager;
@@ -27,13 +27,13 @@ public class UserOrderController {
         userOrderManager.chargeAmount(user, amount);
     }
 
+    public int getUserBalance(User user) {
+        return user.getAmount();
+    }
+
     public void validateCanPurchaseStatus(User user) {
         userOrderManager.validateZeroAmount(user);
         userOrderManager.validateOverAmountByMinProduct(user, shopProductManager.getMinimumPrice());
-    }
-
-    public int getUserBalance(User user) {
-        return user.getAmount();
     }
 
 }

@@ -1,24 +1,27 @@
 package com.sotogito.coffeeshop.view;
 
-import com.sotogito.coffeeshop.controller.AdministratorController;
-import com.sotogito.coffeeshop.controller.ShopController;
+import com.sotogito.coffeeshop.controller.ShopInformationController;
+import com.sotogito.coffeeshop.controller.ShopProductController;
+import com.sotogito.coffeeshop.controller.UserController;
 import com.sotogito.coffeeshop.dao.Sales;
 import com.sotogito.coffeeshop.exception.DuplicateProductException;
 import com.sotogito.coffeeshop.exception.ProductInformationUpdateException;
 import com.sotogito.coffeeshop.model.*;
-import org.w3c.dom.css.CSS2Properties;
 
 import java.util.*;
 
 public class AdministratorView {
     private final Scanner sc = new Scanner(System.in);
 
-    private final ShopController shopController;
-    private final AdministratorController administratorController;
+    private final ShopInformationController shopInformationController;
+    private final ShopProductController shopProductController;
+    private final UserController userController;
 
-    public AdministratorView(ShopController shopController, AdministratorController administratorController) {
-        this.shopController = shopController;
-        this.administratorController = administratorController;
+    public AdministratorView(
+            ShopInformationController shopInformationController, ShopProductController shopProductController, UserController userController) {
+        this.shopInformationController = shopInformationController;
+        this.shopProductController = shopProductController;
+        this.userController = userController;
     }
 
     public void run(User user) {
@@ -80,7 +83,7 @@ public class AdministratorView {
         System.out.println("조회하고 싶은 회원의 id를 입력하세요.");
         String id = sc.nextLine();
 
-        Optional<User> user = shopController.findUserById(id);
+        Optional<User> user = userController.findUserById(id);
         if (user.isEmpty()) {
             System.out.println("존재하지 않는 회원입니다.");
             return;
@@ -116,9 +119,9 @@ public class AdministratorView {
             }
 
             if (functionNum == 1) {
-                shopController.getCoffeeList().forEach(System.out::println);
+                shopProductController.getCoffeeList().forEach(System.out::println);
             } else if (functionNum == 2) {
-                shopController.getBreadList().forEach(System.out::println);
+                shopProductController.getBreadList().forEach(System.out::println);
             } else {
                 addNewProduct(functionNum);
             }
@@ -145,7 +148,7 @@ public class AdministratorView {
             String name = sc.nextLine();
             int price = Integer.parseInt(sc.nextLine());
 
-            administratorController.addNewProduct(new Bread(name, price));
+            shopProductController.addNewProduct(new Bread(name, price));
         } catch (DuplicateProductException e) {
             System.out.println(e.getMessage());
         }
@@ -157,7 +160,7 @@ public class AdministratorView {
             String name = sc.nextLine();
             int price = Integer.parseInt(sc.nextLine());
 
-            administratorController.addNewProduct(new Coffee(name, price));
+            shopProductController.addNewProduct(new Coffee(name, price));
         } catch (DuplicateProductException e) {
             System.out.println(e.getMessage());
         }
@@ -181,7 +184,7 @@ public class AdministratorView {
                 }
 
                 if (functionNum == 1) {
-                    System.out.println(shopController.getShop());
+                    System.out.println(shopInformationController.getShop());
                 } else {
                     editShopInformation(functionNum);
                 }
@@ -192,7 +195,7 @@ public class AdministratorView {
     }
 
     public void editShopInformation(int functionNum) {
-        Shop originShop = shopController.getOriginShop();
+        Shop originShop = shopInformationController.getOriginShop();
 
         if (functionNum == 2) {
             editShopName();
@@ -204,28 +207,28 @@ public class AdministratorView {
 
         System.out.println("수정이 완료되었습니다.");
         System.out.println("변경 전 : " + originShop);
-        System.out.println("변경 후 : " + shopController.getShop());
+        System.out.println("변경 후 : " + shopInformationController.getShop());
     }
 
     public void editShopAddress() {
         System.out.println("수정할 가게 주소를 입력하세요.");
         String newAddress = sc.nextLine();
 
-        administratorController.editShopAddress(newAddress);
+        shopInformationController.editShopAddress(newAddress);
     }
 
     public void editShopName() {
         System.out.println("수정할 가게 이름을 입력하세요.");
         String newName = sc.nextLine();
 
-        administratorController.editShopName(newName);
+        shopInformationController.editShopName(newName);
     }
 
     public void editShopMasterId() {
         System.out.println("수정할 마스터 id을 입력하세요.");
         int newMasterId = Integer.parseInt(sc.nextLine());
 
-        administratorController.editShopMasterId(newMasterId);
+        shopInformationController.editShopMasterId(newMasterId);
     }
 
 }

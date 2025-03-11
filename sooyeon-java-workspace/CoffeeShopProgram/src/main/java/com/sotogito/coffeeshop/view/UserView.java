@@ -1,25 +1,25 @@
 package com.sotogito.coffeeshop.view;
 
-import com.sotogito.coffeeshop.controller.ShopController;
+import com.sotogito.coffeeshop.controller.ShopInformationController;
+import com.sotogito.coffeeshop.controller.ShopProductController;
 import com.sotogito.coffeeshop.controller.UserController;
+import com.sotogito.coffeeshop.controller.UserOrderController;
 import com.sotogito.coffeeshop.exception.*;
 import com.sotogito.coffeeshop.model.Product;
 import com.sotogito.coffeeshop.model.User;
 
-import java.util.InputMismatchException;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class UserView {
     private final Scanner sc = new Scanner(System.in);
 
-    private final ShopController shopController;
-    private final UserController userController;
+    private final UserOrderController userOrderController;
+    private final ShopProductController shopProductController;
 
-    public UserView(ShopController shopController, UserController userController) {
-        this.shopController = shopController;
-        this.userController = userController;
+    public UserView(UserOrderController userOrderController, ShopProductController shopProductController) {
+        this.userOrderController = userOrderController;
+        this.shopProductController = shopProductController;
     }
 
     public void run(User user) {
@@ -61,7 +61,7 @@ public class UserView {
                 System.out.println("얼마를 충전하시겠어요?");
                 int charging = Integer.parseInt(sc.nextLine());
 
-                userController.changeAmount(user, charging);
+                userOrderController.changeAmount(user, charging);
                 System.out.println("충전이 완료되었습니다.");
                 System.out.println(user);
 
@@ -92,27 +92,27 @@ public class UserView {
 
     public void order(User user) {
         try {
-            userController.validateCanPurchaseStatus(user);
+            userOrderController.validateCanPurchaseStatus(user);
         } catch (UserAmountZeroException | UserAmountShortThanMinPriceException e) {
             System.out.println(e.getMessage());
             return;
         }
         System.out.println("==커피==");
-        shopController.getCoffeeList().forEach(System.out::println);
+        shopProductController.getCoffeeList().forEach(System.out::println);
         System.out.println("==빵==");
-        shopController.getBreadList().forEach(System.out::println);
+        shopProductController.getBreadList().forEach(System.out::println);
 
         while (true) {
             try {
                 System.out.println("구매할 상품을 입력해주세요.");
                 System.out.println("구매를 멈추고 싶으면 -> 그만 <- 이라고 입력해주세요");
-                System.out.println("잔액 : "+ userController.getUserBalance(user));
+                System.out.println("잔액 : "+ userOrderController.getUserBalance(user));
 
                 String input = sc.nextLine().trim();
                 if (input.equals("그만")) {
                     return;
                 }
-                userController.order(user, input);
+                userOrderController.order(user, input);
                 System.out.println("구매 성공");
 
             } catch (NoSuchProductException | UserAmountShortException e) {

@@ -1,4 +1,4 @@
-package com.sotogito.coffeeshop.controller2;
+package com.sotogito.coffeeshop.controller;
 
 import com.sotogito.coffeeshop.dao.ShopProductManager;
 import com.sotogito.coffeeshop.model.Product;
@@ -14,6 +14,10 @@ public class ShopProductController {
 
     public void addNewProduct(Product product) {
         shopProductManager.addNewProduct(product);
+    }
+
+    public void deleteProduct(Product product) {
+
     }
 
     public List<Product> getCoffeeList() {

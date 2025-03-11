@@ -1,9 +1,10 @@
 package com.sotogito.coffeeshop.view;
 
 import com.sotogito.coffeeshop.common.Role;
-import com.sotogito.coffeeshop.controller.AdministratorController;
-import com.sotogito.coffeeshop.controller.ShopController;
+import com.sotogito.coffeeshop.controller.ShopInformationController;
+import com.sotogito.coffeeshop.controller.ShopProductController;
 import com.sotogito.coffeeshop.controller.UserController;
+import com.sotogito.coffeeshop.controller.UserOrderController;
 import com.sotogito.coffeeshop.dao.*;
 import com.sotogito.coffeeshop.exception.DuplicateIdException;
 import com.sotogito.coffeeshop.model.Shop;
@@ -18,14 +19,15 @@ public class CoffeeShopView {
     private final AdministratorView administratorView;
     private final UserView userView;
 
-    private final ShopController shopController;
-    private final AdministratorController administratorController;
     private final UserController userController;
+    private final UserOrderController userOrderController;
+    private final ShopInformationController shopInformationController;
+    private final ShopProductController shopProductController;
 
     public CoffeeShopView() {
         Shop shop = new Shop(1, "스타벅스", "평택");
 
-        UserRepository ur = new UserRepository();
+        UserRepository userRepository = new UserRepository();
         UserOrderManager orderManager = new UserOrderManager();
 
         ShopInformationManager shopInformationManager = new ShopInformationManager(shop);
@@ -33,12 +35,14 @@ public class CoffeeShopView {
         ShopSalesFileMaker fileMaker = new ShopSalesFileMaker();
 
 
-        shopController = new ShopController(shopInformationManager,productManager, ur);
-        administratorController = new AdministratorController(shopInformationManager, productManager, fileMaker);
-        userController = new UserController(orderManager, productManager);
+        userController = new UserController(userRepository);
+        userOrderController = new UserOrderController(orderManager,productManager);
+        shopInformationController = new ShopInformationController(shopInformationManager);
+        shopProductController = new ShopProductController(productManager);
 
-        administratorView = new AdministratorView(shopController, administratorController);
-        userView = new UserView(shopController, userController);
+
+        administratorView = new AdministratorView(shopInformationController,shopProductController,userController);
+        userView = new UserView(userOrderController,shopProductController);
     }
 
     public void run() {
@@ -66,7 +70,7 @@ public class CoffeeShopView {
     }
 
     private User getUser(String id, String pwd) {
-        Optional<User> foundUser = shopController.login(id, pwd);
+        Optional<User> foundUser = userController.login(id, pwd);
 
         if (foundUser.isEmpty()) {
             return createUser();
@@ -84,7 +88,7 @@ public class CoffeeShopView {
                 String name = scanner.nextLine();
                 int amount = Integer.parseInt(scanner.nextLine());
 
-                return shopController.join(id, pwd, name, amount);
+                return userController.join(id, pwd, name, amount);
 
             } catch (DuplicateIdException e) {
                 System.out.println(e.getMessage());
