@@ -9,6 +9,7 @@ public class ShopInformationManager {
         this.shop = shop;
     }
 
+
     public Shop getShop() {
         return shop;
     }
@@ -16,6 +17,7 @@ public class ShopInformationManager {
     public Shop getOriginalShop() {
         return shop.getOriginalShopContainInfo();
     }
+
 
     public void editShopName(String newName) {
         shop.setName(newName);

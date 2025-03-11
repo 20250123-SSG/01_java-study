@@ -1,7 +1,8 @@
-package com.sotogito.coffeeshop.model;
+package com.sotogito.coffeeshop.model.products;
 
 import com.sotogito.coffeeshop.common.ProductType;
 import com.sotogito.coffeeshop.exception.ProductInformationUpdateException;
+import com.sotogito.coffeeshop.model.Product;
 
 import java.util.Objects;
 
@@ -17,6 +18,7 @@ public class Coffee implements Product {
         this.price = price;
     }
 
+
     @Override
     public String getName() {
         return name;
@@ -31,6 +33,7 @@ public class Coffee implements Product {
     public ProductType getType() {
         return ProductType.COFFEE;
     }
+
 
     @Override
     public boolean equals(Object o) {

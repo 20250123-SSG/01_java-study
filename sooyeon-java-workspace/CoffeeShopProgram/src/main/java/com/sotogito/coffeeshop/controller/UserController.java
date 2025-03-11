@@ -13,6 +13,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+
     public Optional<User> login(String id, String password) {
         return userRepository.findByIdAndPassword(id, password);
     }
@@ -22,6 +23,7 @@ public class UserController {
         userRepository.addUser(newUser);
         return newUser;
     }
+
 
     public Optional<User> findUserById(String id) {
         return userRepository.findById(id);

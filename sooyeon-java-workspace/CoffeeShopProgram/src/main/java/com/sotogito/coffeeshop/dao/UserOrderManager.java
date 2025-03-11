@@ -12,10 +12,12 @@ public class UserOrderManager {
         user.chargeAmount(amount);
     }
 
+
     public void orderByOne(User user, Product product) {
         user.purchase(product);
         user.addOrder(product);
     }
+
 
     public void validateOverAmountByMinProduct(User user, int minPrice) {
         if (!user.isOverAmountThanProductPrice(minPrice)) {

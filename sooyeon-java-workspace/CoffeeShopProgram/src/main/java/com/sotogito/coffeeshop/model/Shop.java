@@ -3,8 +3,9 @@ package com.sotogito.coffeeshop.model;
 import com.sotogito.coffeeshop.common.ProductType;
 import com.sotogito.coffeeshop.exception.DuplicateProductException;
 import com.sotogito.coffeeshop.exception.NoSuchProductException;
+import com.sotogito.coffeeshop.model.products.Bread;
+import com.sotogito.coffeeshop.model.products.Coffee;
 
-import javax.swing.plaf.PanelUI;
 import java.util.*;
 
 public class Shop {
@@ -28,6 +29,7 @@ public class Shop {
         products.put(ProductType.BREAD, breads);
     }
 
+
     public Shop() {
     }
 
@@ -36,6 +38,7 @@ public class Shop {
         this.name = name;
         this.address = address;
     }
+
 
     public void addProduct(Product product) {
         List<Product> result = products.get(product.getType());
@@ -57,6 +60,7 @@ public class Shop {
         throw new NoSuchProductException("존재하지 않는 상품입니다.");
     }
 
+
     public Product findProductByName(String name) {
         return products.values().stream()
                 .flatMap(List::stream) //todo
@@ -74,6 +78,7 @@ public class Shop {
 
         return Collections.min(productsPrice);
     }
+
 
     public List<Product> getCoffees() {
         return Collections.unmodifiableList(products.get(ProductType.COFFEE));
@@ -107,15 +112,17 @@ public class Shop {
         this.address = address;
     }
 
-    public Shop getOriginalShopContainInfo(){
+    public Shop getOriginalShopContainInfo() {
         return new Shop(masterId, name, address);
     }
+
 
     @Override
     public String toString() {
         return "Shop{" +
                 "masterId=" + masterId +
                 ", name='" + name + '\'' +
-                ", address='" + address ;
+                ", address='" + address;
     }
+
 }

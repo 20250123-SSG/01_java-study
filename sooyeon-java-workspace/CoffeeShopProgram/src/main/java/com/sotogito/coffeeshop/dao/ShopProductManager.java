@@ -14,6 +14,7 @@ public class ShopProductManager {
         minimumPrice = this.shop.findMinimumPrice();
     }
 
+
     public void addNewProduct(Product product) {
         if (product.getPrice() < minimumPrice) {
             minimumPrice = product.getPrice();
@@ -24,6 +25,7 @@ public class ShopProductManager {
     public void deleteProductByName(String productName) {
         shop.removeProduct(shop.findProductByName(productName));
     }
+
 
     public Product findProductByName(String name) {
         return shop.findProductByName(name);

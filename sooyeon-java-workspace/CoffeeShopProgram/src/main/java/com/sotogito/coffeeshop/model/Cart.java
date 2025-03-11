@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
-    private final HashMap<Product, Integer> orders = new HashMap<>(); //상품 + 주문 개수
+    private final HashMap<Product, Integer> orders = new HashMap<>();
 
     public void addOrder(Product product) {
         if (orders.containsKey(product)) {
@@ -18,6 +18,5 @@ public class Cart {
     public Map<Product, Integer> getOrders() {
         return Collections.unmodifiableMap(orders);
     }
-
 
 }

@@ -12,6 +12,7 @@ public class ShopProductController {
         this.shopProductManager = shopProductManager;
     }
 
+
     public void addNewProduct(Product product) {
         shopProductManager.addNewProduct(product);
     }
@@ -19,6 +20,7 @@ public class ShopProductController {
     public void deleteProductByName(String productName) {
         shopProductManager.deleteProductByName(productName);
     }
+
 
     public List<Product> getCoffeeList() {
         return shopProductManager.getCoffeeList();

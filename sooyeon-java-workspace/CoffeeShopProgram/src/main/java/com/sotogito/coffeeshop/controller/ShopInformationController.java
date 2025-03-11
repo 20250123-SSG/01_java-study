@@ -10,13 +10,15 @@ public class ShopInformationController {
         this.shopInformationManager = shopInformationManager;
     }
 
+
     public Shop getShop() {
         return shopInformationManager.getShop();
     }
 
-    public Shop getOriginShop(){
+    public Shop getOriginShop() {
         return shopInformationManager.getOriginalShop();
     }
+
 
     public void editShopName(String newName) {
         shopInformationManager.editShopName(newName);

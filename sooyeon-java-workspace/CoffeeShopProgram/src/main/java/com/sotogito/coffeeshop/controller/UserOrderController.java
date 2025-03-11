@@ -31,6 +31,7 @@ public class UserOrderController {
         return user.getAmount();
     }
 
+
     public void validateCanPurchaseStatus(User user) {
         userOrderManager.validateZeroAmount(user);
         userOrderManager.validateOverAmountByMinProduct(user, shopProductManager.getMinimumPrice());

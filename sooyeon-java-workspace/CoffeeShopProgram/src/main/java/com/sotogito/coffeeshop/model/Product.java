@@ -9,4 +9,5 @@ public interface Product {
     int getPrice();
 
     ProductType getType();
+
 }

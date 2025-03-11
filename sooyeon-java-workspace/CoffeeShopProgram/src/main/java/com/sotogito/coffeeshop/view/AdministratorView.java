@@ -8,6 +8,8 @@ import com.sotogito.coffeeshop.exception.DuplicateProductException;
 import com.sotogito.coffeeshop.exception.NoSuchProductException;
 import com.sotogito.coffeeshop.exception.ProductInformationUpdateException;
 import com.sotogito.coffeeshop.model.*;
+import com.sotogito.coffeeshop.model.products.Bread;
+import com.sotogito.coffeeshop.model.products.Coffee;
 
 import java.util.*;
 
@@ -24,6 +26,7 @@ public class AdministratorView {
         this.shopProductController = shopProductController;
         this.userController = userController;
     }
+
 
     public void run(User user) {
         System.out.println("관리자 페이지입니다.");
@@ -53,6 +56,11 @@ public class AdministratorView {
         }
     }
 
+
+
+
+
+
     public void manageShopSales() {
         System.out.println("=====가게 매출 관리 페이지=====");
         while (true) {
@@ -75,9 +83,9 @@ public class AdministratorView {
         }
     }
 
-    public void printSalesHistory(){
+    public void printSalesHistory() {
         System.out.println(Sales.SALES);
-        System.out.printf(Sales.PRINT_TOTAL_SALES_AMOUNT,Sales.SALES.getTotalSalesAmount());
+        System.out.printf(Sales.PRINT_TOTAL_SALES_AMOUNT, Sales.SALES.getTotalSalesAmount());
     }
 
     public void showUserPurchaseHistory() {
@@ -89,8 +97,8 @@ public class AdministratorView {
             System.out.println("존재하지 않는 회원입니다.");
             return;
         }
-        Map<Product, Integer> orders = user.get().getOrders();
 
+        Map<Product, Integer> orders = user.get().getOrders();
         if (orders.isEmpty()) {
             System.out.println("주문 내역이 없습니다.");
             return;
@@ -101,6 +109,10 @@ public class AdministratorView {
             System.out.printf("%s : %d개\n", productName, count);
         }
     }
+
+
+
+
 
 
     public void manageShopProduct() {
@@ -121,25 +133,19 @@ public class AdministratorView {
             }
 
             switch (functionNum) {
-                case 1: printCoffeeProducts(); break;
-                case 2: printBreadProducts(); break;
-                case 3,4:  addNewProduct(functionNum); break;
-                case 5:deleteProduct(); break;
+                case 1:
+                    printCoffeeProducts();
+                    break;
+                case 2:
+                    printBreadProducts();
+                    break;
+                case 3, 4:
+                    addNewProduct(functionNum);
+                    break;
+                case 5:
+                    deleteProduct();
+                    break;
             }
-        }
-    }
-
-    public void deleteProduct(){
-        printCoffeeProducts();
-        printBreadProducts();
-        System.out.println("삭제할 상품 이름을 입력하세요.");
-        try{
-            String productName = sc.nextLine();
-
-            shopProductController.deleteProductByName(productName);
-            System.out.println("삭제되었습니다.");
-        }catch (NoSuchProductException e){
-            System.out.println(e.getMessage());
         }
     }
 
@@ -182,6 +188,24 @@ public class AdministratorView {
             System.out.println(e.getMessage());
         }
     }
+
+    public void deleteProduct() {
+        printCoffeeProducts();
+        printBreadProducts();
+        System.out.println("삭제할 상품 이름을 입력하세요.");
+        try {
+            String productName = sc.nextLine();
+
+            shopProductController.deleteProductByName(productName);
+            System.out.println("삭제되었습니다.");
+        } catch (NoSuchProductException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+
+
 
     public void manageShopInformation() {
         System.out.println("=====가게 정보 관리 페이지=====");
@@ -248,11 +272,12 @@ public class AdministratorView {
         shopInformationController.editShopMasterId(newMasterId);
     }
 
-    public void printCoffeeProducts(){
+
+    public void printCoffeeProducts() {
         shopProductController.getCoffeeList().forEach(System.out::println);
     }
 
-    public void printBreadProducts(){
+    public void printBreadProducts() {
         shopProductController.getBreadList().forEach(System.out::println);
     }
 

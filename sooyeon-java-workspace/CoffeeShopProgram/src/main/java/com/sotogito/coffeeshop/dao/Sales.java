@@ -10,6 +10,7 @@ public enum Sales {
 
     private final static String PRINT_SALES_HISTORY_FORMAT = "%s : %,d개\n";
     public final static String PRINT_TOTAL_SALES_AMOUNT = "총 판매액 : %,d\n";
+
     private final static HashMap<Product, Integer> sales = new HashMap<>();
 
     public void add(Product product) {
@@ -25,6 +26,7 @@ public enum Sales {
                 .mapToInt(product -> product.getPrice() * sales.get(product))
                 .sum();
     }
+
 
     @Override
     public String toString() {

@@ -1,7 +1,8 @@
-package com.sotogito.coffeeshop.model;
+package com.sotogito.coffeeshop.model.products;
 
 import com.sotogito.coffeeshop.common.ProductType;
 import com.sotogito.coffeeshop.exception.ProductInformationUpdateException;
+import com.sotogito.coffeeshop.model.Product;
 
 import java.util.Objects;
 
@@ -10,12 +11,13 @@ public class Bread implements Product {
     private final int price;
 
     public Bread(String name, int price) {
-        if(name == null) throw new ProductInformationUpdateException("이름이 비어있습니다.");
-        if(price < 0) throw new ProductInformationUpdateException("가격은 최소 0원으로 등록해주세요.");
+        if (name == null) throw new ProductInformationUpdateException("이름이 비어있습니다.");
+        if (price < 0) throw new ProductInformationUpdateException("가격은 최소 0원으로 등록해주세요.");
 
         this.name = name;
         this.price = price;
     }
+
 
     @Override
     public String getName() {
@@ -31,6 +33,7 @@ public class Bread implements Product {
     public ProductType getType() {
         return ProductType.BREAD;
     }
+
 
     @Override
     public boolean equals(Object o) {
