@@ -5,6 +5,7 @@ import com.homework.common.MathCalculator;
 import com.homework.common.StringCalculator;
 import com.homework.dto.FoodShop;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -39,38 +40,68 @@ import java.util.StringTokenizer;
         public Calendar makeCalendar(String year, String month, String date) {
             Calendar cal = Calendar.getInstance();
             cal.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(date));
-            return null;
+            return cal;
         }
 
         @Override
         public void printFormat(Calendar calc) {
-
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd EEE");
+            String date = sdf.format(calc.getTime());
+            System.out.println(date);
         }
 
         @Override
         public boolean isLeapYear(int year) {
-
+            if(year % 4 == 0){
+                if(year%100 != 0 || year%100 != 0){
+                    return true;
+                }
+            }
             return false;
         }
 
         @Override
         public long leapDate(int startYear, int endYear) {
-            return 0;
+            long totalDays = 0;
+
+            for(int year = startYear; year <= endYear; year++){
+                if(isLeapYear(year)){ // 윤년이면 366일 추가
+                    totalDays += 366;
+                } else{               // 평년이면 365일 추가
+                    totalDays += 365;
+                }
+            }
+            return totalDays;
         }
 
         @Override
         public int sumString(String num1, String num2) {
-            return 0;
+            int number1 = Integer.parseInt(num1);
+            int number2 = Integer.parseInt(num2);
+            return Math.round(number1 + number2);
         }
 
         @Override
         public int minusString(String num1, String num2) {
-            return 0;
+            try {
+                int number1 = Integer.parseInt(num1);
+                int number2 = Integer.parseInt(num2);
+                return (number1 - number2);
+            } catch (NumberFormatException e){
+                return -1;
+            }
         }
 
         @Override
         public int findCharCount(String str, char ch) {
-            return 0;
+            int count = 0;
+            String str = equalsIgnoreCase
+            for(int i=0; i < str.length(); i++){
+                if(str.charAt(i) == ch){
+                    count++;
+                }
+            }
+            return count;
         }
 
         @Override

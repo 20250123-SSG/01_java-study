@@ -86,8 +86,7 @@ public class Menu {
 			}else {
 				System.out.println("\n다시 메뉴를 선택해주세요.");
 			}
-			
-			
+
 		}
 		
 	}
