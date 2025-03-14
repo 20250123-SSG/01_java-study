@@ -94,14 +94,13 @@ import java.util.StringTokenizer;
 
         @Override
         public int findCharCount(String str, char ch) {
-            int count = 0;
-            String str = equalsIgnoreCase
+            int count = 0; // count 해주기 위해 초기화
             for(int i=0; i < str.length(); i++){
-                if(str.charAt(i) == ch){
-                    count++;
+                if(Character.toLowerCase(str.charAt(i)) == Character.toLowerCase(ch)){
+                    count++; // count 해주기
                 }
             }
-            return count;
+            return count; // 몇개인지 반환
         }
 
         @Override
