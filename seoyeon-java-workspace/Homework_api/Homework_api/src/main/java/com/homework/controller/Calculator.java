@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
     public class Calculator implements StringCalculator, MathCalculator, DateCalculator {
@@ -25,7 +26,6 @@ import java.util.StringTokenizer;
         9,만선당어부의밥상,광주광역시 광산구 수완로11번길 3,062-955-5595,한상맛집,2022-01-11
         10,백년미가(유촌점),광주광역시 서구 유덕로28번길 18,062-946-3392,한상맛집,2022-01-11
     """;
-
 
         @Override
         public void printNowDateTime() {
@@ -105,16 +105,56 @@ import java.util.StringTokenizer;
 
         @Override
         public int selectTokenCount(String str) {
-            return 0;
+            StringTokenizer st = new StringTokenizer(str);
+            return st.countTokens();
         }
 
         @Override
         public String toSpaceUpper(String str) {
-            return "";
+            if(str == null || str.isEmpty()){
+                return str;
+            }
+
+            String[] words = str.split(" ");
+            StringBuilder result = new StringBuilder();
+
+            for(String word : words){
+                if (!word.isEmpty()){
+                    result.append(Character.toUpperCase(word.charAt(0)))
+                            .append(word.substring(1))
+                            .append(" ");
+                }
+            }
+            return result.toString().trim();
         }
 
         @Override
         public FoodShop[] csvFormat() {
-            return new FoodShop[0];
+            String[] rows = CSV_DATA.split("\n");
+            FoodShop[] foodShops = new FoodShop[rows.length];
+
+            for(int i=0; i<rows.length; i++){
+                String[] fields = rows[i].split(",");
+                foodShops[i] = new FoodShop(
+                        Integer.parseInt(fields[0]),
+                        fields[1],
+                        fields[2],
+                        fields[3],
+                        fields[4],
+                        fields[5]
+                        
+                        /*
+                            int id = fields.length > 0 ? Integer.parseInt(fields[0]) : 0;
+                            String name = fields.length > 1 ? fields[1] : "Unknown";
+                            String address = fields.length > 2 ? fields[2] : "Unknown";
+                            String phone = fields.length > 3 ? fields[3] : "Unknown";
+                            String type = fields.length > 4 ? fields[4] : "Unknown";
+                            String description = fields.length > 5 ? fields[5] : "No description";
+
+                            foodShops[i] = new FoodShop(id, name, address, phone, type, description);
+                         */
+                );
+            }
+            return foodShops;
         }
     }
