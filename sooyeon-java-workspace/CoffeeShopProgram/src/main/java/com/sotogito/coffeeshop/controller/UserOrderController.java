@@ -1,26 +1,29 @@
 package com.sotogito.coffeeshop.controller;
 
-import com.sotogito.coffeeshop.dao.Sales;
-import com.sotogito.coffeeshop.dao.ShopProductManager;
-import com.sotogito.coffeeshop.dao.UserOrderManager;
+import com.sotogito.serivce.ShopProductService;
+import com.sotogito.serivce.UserOrderService;
 import com.sotogito.coffeeshop.model.Product;
 import com.sotogito.coffeeshop.model.User;
 
 public class UserOrderController {
-    private final UserOrderManager userOrderManager;
-    private final ShopProductManager shopProductManager;
+    private final UserOrderService userOrderManager;
+    private final ShopProductService shopProductManager;
 
-    public UserOrderController(UserOrderManager userOrderManager, ShopProductManager shopProductManager) {
+    public UserOrderController(UserOrderService userOrderManager, ShopProductService shopProductManager) {
         this.userOrderManager = userOrderManager;
         this.shopProductManager = shopProductManager;
     }
 
-    public void order(User user, String productName) {
+    public void addCart(User user, String productName) {
         validateCanPurchaseStatus(user);
 
         Product product = shopProductManager.findProductByName(productName);
-        userOrderManager.orderByOne(user, product);
-        Sales.SALES.add(product);
+        userOrderManager.addCartByOne(user, product);
+       // Sales.SALES.add(product);
+    }
+
+    public void purchaseAllInCart(User user) {
+        userOrderManager.purchase(user);
     }
 
     public void changeAmount(User user, int amount) {
@@ -28,8 +31,13 @@ public class UserOrderController {
     }
 
     public int getUserBalance(User user) {
-        return user.getAmount();
+        return user.getBalance();
     }
+
+    public void clearCart(User user) {
+        userOrderManager.clearCart(user);
+    }
+
 
 
     public void validateCanPurchaseStatus(User user) {

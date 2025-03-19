@@ -1,14 +1,14 @@
 package com.sotogito.coffeeshop.controller;
 
-import com.sotogito.coffeeshop.dao.ShopProductManager;
+import com.sotogito.serivce.ShopProductService;
 import com.sotogito.coffeeshop.model.Product;
 
 import java.util.List;
 
 public class ShopProductController {
-    private final ShopProductManager shopProductManager;
+    private final ShopProductService shopProductManager;
 
-    public ShopProductController(ShopProductManager shopProductManager) {
+    public ShopProductController(ShopProductService shopProductManager) {
         this.shopProductManager = shopProductManager;
     }
 

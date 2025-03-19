@@ -9,6 +9,9 @@ import com.sotogito.coffeeshop.dao.*;
 import com.sotogito.coffeeshop.exception.DuplicateIdException;
 import com.sotogito.coffeeshop.model.Shop;
 import com.sotogito.coffeeshop.model.User;
+import com.sotogito.serivce.ShopInformationService;
+import com.sotogito.serivce.ShopProductService;
+import com.sotogito.serivce.UserOrderService;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -28,11 +31,11 @@ public class CoffeeShopView {
         Shop shop = new Shop(1, "스타벅스", "평택");
 
         UserRepository userRepository = new UserRepository();
-        UserOrderManager orderManager = new UserOrderManager();
+        UserOrderService orderManager = new UserOrderService();
 
-        ShopInformationManager shopInformationManager = new ShopInformationManager(shop);
-        ShopProductManager productManager = new ShopProductManager(shop);
-        ShopSalesFileMaker fileMaker = new ShopSalesFileMaker();
+        ShopInformationService shopInformationManager = new ShopInformationService(shop);
+        ShopProductService productManager = new ShopProductService(shop);
+        UserPurchaseFileWriter fileMaker = new UserPurchaseFileWriter();
 
 
         userController = new UserController(userRepository);

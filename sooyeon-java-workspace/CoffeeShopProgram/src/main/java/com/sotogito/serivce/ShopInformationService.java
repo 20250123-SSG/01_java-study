@@ -1,11 +1,11 @@
-package com.sotogito.coffeeshop.dao;
+package com.sotogito.serivce;
 
 import com.sotogito.coffeeshop.model.Shop;
 
-public class ShopInformationManager {
+public class ShopInformationService {
     private final Shop shop;
 
-    public ShopInformationManager(Shop shop) {
+    public ShopInformationService(Shop shop) {
         this.shop = shop;
     }
 

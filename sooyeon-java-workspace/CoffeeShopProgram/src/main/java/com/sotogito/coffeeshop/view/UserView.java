@@ -1,8 +1,6 @@
 package com.sotogito.coffeeshop.view;
 
-import com.sotogito.coffeeshop.controller.ShopInformationController;
 import com.sotogito.coffeeshop.controller.ShopProductController;
-import com.sotogito.coffeeshop.controller.UserController;
 import com.sotogito.coffeeshop.controller.UserOrderController;
 import com.sotogito.coffeeshop.exception.*;
 import com.sotogito.coffeeshop.model.Product;
@@ -84,9 +82,33 @@ public class UserView {
         Map<Product, Integer> orders = user.getOrders();
         if (orders.isEmpty()) {
             System.out.println("장바구니가 비어있어요.");
+            return;
         }
         for (Map.Entry<Product, Integer> entry : orders.entrySet()) {
             System.out.println(entry.getKey().getName() + " : " + entry.getValue());
+        }
+
+        System.out.println("구매 후 잔액 : "+user.getBalance());
+        System.out.println("구매하시겠습니까? (y/n)");
+        boolean canPurchase = sc.nextLine().equalsIgnoreCase("y");
+
+        if(canPurchase) {
+            userOrderController.purchaseAllInCart(user);
+            System.out.println("구매 완료되었습니다.");
+            return;
+        }
+
+        System.out.println("""
+                1. 장바구니 비우기
+                2. 계속 구매하기
+                """);
+        int functionNum = Integer.parseInt(sc.nextLine());
+
+        if(functionNum == 1){
+            userOrderController.clearCart(user);
+            System.out.println("장바구니가 비워졌습니다.");
+        }else {
+            System.out.println("구매를 계속 진행합니다.");
         }
     }
 
@@ -104,16 +126,16 @@ public class UserView {
 
         while (true) {
             try {
-                System.out.println("구매할 상품을 입력해주세요.");
-                System.out.println("구매를 멈추고 싶으면 -> 그만 <- 이라고 입력해주세요");
+                System.out.println("장바구니에 담을 상품을 입력해주세요.");
+                System.out.println("멈추고 싶으면 -> 그만 <- 이라고 입력해주세요");
                 System.out.println("잔액 : " + userOrderController.getUserBalance(user));
 
                 String input = sc.nextLine().trim();
                 if (input.equals("그만")) {
                     return;
                 }
-                userOrderController.order(user, input);
-                System.out.println("구매 성공");
+                userOrderController.addCart(user, input);
+                System.out.println("담기 성공");
 
             } catch (NoSuchProductException | UserAmountShortException e) {
                 System.out.println(e.getMessage());

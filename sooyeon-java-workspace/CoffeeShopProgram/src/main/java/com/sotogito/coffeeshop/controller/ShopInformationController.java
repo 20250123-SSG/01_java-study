@@ -1,12 +1,12 @@
 package com.sotogito.coffeeshop.controller;
 
-import com.sotogito.coffeeshop.dao.ShopInformationManager;
+import com.sotogito.serivce.ShopInformationService;
 import com.sotogito.coffeeshop.model.Shop;
 
 public class ShopInformationController {
-    private final ShopInformationManager shopInformationManager;
+    private final ShopInformationService shopInformationManager;
 
-    public ShopInformationController(ShopInformationManager shopInformationManager) {
+    public ShopInformationController(ShopInformationService shopInformationManager) {
         this.shopInformationManager = shopInformationManager;
     }
 

@@ -1,15 +1,15 @@
-package com.sotogito.coffeeshop.dao;
+package com.sotogito.serivce;
 
 import com.sotogito.coffeeshop.model.Product;
 import com.sotogito.coffeeshop.model.Shop;
 
 import java.util.List;
 
-public class ShopProductManager {
+public class ShopProductService {
     private final Shop shop;
     private int minimumPrice;
 
-    public ShopProductManager(Shop shop) {
+    public ShopProductService(Shop shop) {
         this.shop = shop;
         minimumPrice = this.shop.findMinimumPrice();
     }

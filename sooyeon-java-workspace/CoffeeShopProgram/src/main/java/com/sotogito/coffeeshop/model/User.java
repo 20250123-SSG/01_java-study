@@ -1,6 +1,7 @@
 package com.sotogito.coffeeshop.model;
 
 import com.sotogito.coffeeshop.common.Role;
+import com.sotogito.coffeeshop.dao.UserPurchaseFileWriter;
 import com.sotogito.coffeeshop.exception.MinimumChargeException;
 import com.sotogito.coffeeshop.exception.UserAmountShortException;
 
@@ -24,8 +25,8 @@ public class User {
         this.cart = new Cart();
     }
 
-    public void addOrder(Product product) {
-        cart.addOrder(product);
+    public void addCart(Product product) {
+        cart.addCart(product);
     }
 
     public void chargeAmount(int amount) {
@@ -35,14 +36,22 @@ public class User {
         this.amount += amount;
     }
 
-    public void purchase(Product product) {
-        int purchaseAmount = product.getPrice();
-        if (!isOverAmountThanProductPrice(purchaseAmount) || (this.amount - purchaseAmount) <= 0) {
-            throw new UserAmountShortException("잔액이 부족합니다.");
-        }
-
-        this.amount -= purchaseAmount;
+    public boolean isEmptyCart(){
+        return cart.isEmpty();
     }
+
+    public void purchase() {
+        int balance = cart.calculateBalance(amount);
+        if(balance < 0) {
+            throw new UserAmountShortException("잔액이 부족하여 최종구매할 수 없습니다..");
+        }
+        amount = balance;
+    }
+
+    public void updatePurchaseFile(UserPurchaseFileWriter writer){
+        writer.paymentFileSave(name,cart.getOrders());
+    }
+
 
     public Map<Product, Integer> getOrders() {
        return cart.getOrders();
@@ -68,12 +77,16 @@ public class User {
         return name;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getBalance() {
+        return cart.calculateBalance(amount);
     }
 
     public Role getRole() {
         return role;
+    }
+
+    public void clearCart() {
+        cart.clear();
     }
 
 

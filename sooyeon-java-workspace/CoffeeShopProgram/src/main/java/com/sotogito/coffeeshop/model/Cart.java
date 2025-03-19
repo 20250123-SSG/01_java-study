@@ -6,17 +6,32 @@ import java.util.Map;
 
 public class Cart {
     private final HashMap<Product, Integer> orders = new HashMap<>();
+    private int purchaseAmount = 0;
 
-    public void addOrder(Product product) {
+    public void addCart(Product product) {
         if (orders.containsKey(product)) {
             orders.put(product, orders.get(product) + 1);
-            return;
+        }else {
+            orders.put(product, 1);
         }
-        orders.put(product, 1);
+        purchaseAmount += product.getPrice();
     }
 
     public Map<Product, Integer> getOrders() {
         return Collections.unmodifiableMap(orders);
+    }
+
+    public int calculateBalance(int userAmount) {
+        return userAmount - purchaseAmount;
+    }
+
+    public void clear(){
+        orders.clear();
+        purchaseAmount = 0;
+    }
+
+    public boolean isEmpty() {
+        return orders.isEmpty();
     }
 
 }

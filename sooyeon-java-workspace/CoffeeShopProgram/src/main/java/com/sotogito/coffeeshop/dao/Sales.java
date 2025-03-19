@@ -8,6 +8,7 @@ import java.util.Map;
 public enum Sales {
     SALES;
 
+    private UserPurchaseFileWriter shopSalesFileMaker;
     private final static String PRINT_SALES_HISTORY_FORMAT = "%s : %,d개\n";
     public final static String PRINT_TOTAL_SALES_AMOUNT = "총 판매액 : %,d\n";
 
