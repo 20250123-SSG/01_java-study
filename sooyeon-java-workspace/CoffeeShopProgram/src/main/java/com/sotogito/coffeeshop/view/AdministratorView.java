@@ -3,13 +3,15 @@ package com.sotogito.coffeeshop.view;
 import com.sotogito.coffeeshop.controller.ShopInformationController;
 import com.sotogito.coffeeshop.controller.ShopProductController;
 import com.sotogito.coffeeshop.controller.UserController;
-import com.sotogito.coffeeshop.dao.Sales;
+import com.sotogito.coffeeshop.serivce.CoffeeShopSeller;
+import com.sotogito.coffeeshop.dto.PaymentDetailsDTO;
 import com.sotogito.coffeeshop.exception.DuplicateProductException;
 import com.sotogito.coffeeshop.exception.NoSuchProductException;
 import com.sotogito.coffeeshop.exception.ProductInformationUpdateException;
 import com.sotogito.coffeeshop.model.*;
 import com.sotogito.coffeeshop.model.products.Bread;
 import com.sotogito.coffeeshop.model.products.Coffee;
+import com.sotogito.coffeeshop.view.printer.PaymentPrinter;
 
 import java.util.*;
 
@@ -57,10 +59,58 @@ public class AdministratorView {
     }
 
 
+    public void manageShopSales() {
+        System.out.println("=====가게 매출 관리 페이지=====");
+        while (true) {
+            System.out.println("""
+                    1. 전체 판매 내역 조회
+                    2. 특정 고객 구매 내역 조회
+                    0. 뒤로가기
+                    """);
+            int functionNum = Integer.parseInt(sc.nextLine());
+
+            if (functionNum == 0) {
+                return;
+            }
+            if (functionNum == 1) {
+                printAllPaymentDetails();
+            } else if (functionNum == 2) {
+                printUserPaymentDetails();
+            }
+
+        }
+    }
+
+    private void printAllPaymentDetails() {
+        Map<String, List<PaymentDetailsDTO>> paymentDetails = CoffeeShopSeller.COFFEE_SHOP_SELLER.getPaymentDetails();
+
+        for(String key : paymentDetails.keySet()) {
+            System.out.println(PaymentPrinter.getPrintout(key, paymentDetails.get(key)));
+        }
+        System.out.println("조회완료");
+    }
+
+    private void printUserPaymentDetails() {
+        System.out.println("조회하고 싶은 회원의 id를 입력하세요.");
+        String id = sc.nextLine();
+
+        Optional<User> user = userController.findUserById(id);
+        if (user.isEmpty()) {
+            System.out.println("존재하지 않는 회원입니다.");
+            return;
+        }
+
+        Map<String, List<PaymentDetailsDTO>> paymentDetails = CoffeeShopSeller.COFFEE_SHOP_SELLER.getPaymentDetailsByUser(user.get());
+        for(String key : paymentDetails.keySet()) {
+            System.out.println(PaymentPrinter.getPrintout(key, paymentDetails.get(key)));
+        }
+        System.out.println("조회완료");
+    }
 
 
 
-
+// todo
+/*
     public void manageShopSales() {
         System.out.println("=====가게 매출 관리 페이지=====");
         while (true) {
@@ -84,8 +134,8 @@ public class AdministratorView {
     }
 
     public void printSalesHistory() {
-        System.out.println(Sales.SALES);
-        System.out.printf(Sales.PRINT_TOTAL_SALES_AMOUNT, Sales.SALES.getTotalSalesAmount());
+        System.out.println(CoffeeShopSeller.SALES);
+        System.out.printf(CoffeeShopSeller.PRINT_TOTAL_SALES_AMOUNT, CoffeeShopSeller.SALES.getTotalSalesAmount());
     }
 
     public void showUserPurchaseHistory() {
@@ -110,6 +160,8 @@ public class AdministratorView {
         }
     }
 
+
+ */
 
 
 

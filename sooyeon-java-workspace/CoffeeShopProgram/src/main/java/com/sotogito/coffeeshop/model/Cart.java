@@ -8,6 +8,7 @@ public class Cart {
     private final HashMap<Product, Integer> orders = new HashMap<>();
     private int purchaseAmount = 0;
 
+    /// else를 잘 활용한 케이스 둘다 의미있는 행위이며 동통되는 처리를 할 수 있음
     public void addCart(Product product) {
         if (orders.containsKey(product)) {
             orders.put(product, orders.get(product) + 1);

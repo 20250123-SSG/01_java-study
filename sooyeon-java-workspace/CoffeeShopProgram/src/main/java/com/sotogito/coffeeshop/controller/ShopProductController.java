@@ -1,6 +1,6 @@
 package com.sotogito.coffeeshop.controller;
 
-import com.sotogito.serivce.ShopProductService;
+import com.sotogito.coffeeshop.serivce.ShopProductService;
 import com.sotogito.coffeeshop.model.Product;
 
 import java.util.List;

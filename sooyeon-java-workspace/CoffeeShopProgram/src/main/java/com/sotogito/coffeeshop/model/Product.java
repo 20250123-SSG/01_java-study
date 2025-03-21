@@ -2,7 +2,9 @@ package com.sotogito.coffeeshop.model;
 
 import com.sotogito.coffeeshop.common.ProductType;
 
-public interface Product {
+import java.io.Serializable;
+
+public interface Product extends Serializable {
 
     String getName();
 

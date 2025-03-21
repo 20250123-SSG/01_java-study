@@ -1,6 +1,6 @@
 package com.sotogito.coffeeshop.controller;
 
-import com.sotogito.serivce.ShopInformationService;
+import com.sotogito.coffeeshop.serivce.ShopInformationService;
 import com.sotogito.coffeeshop.model.Shop;
 
 public class ShopInformationController {

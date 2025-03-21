@@ -1,15 +1,17 @@
-package com.sotogito.serivce;
+package com.sotogito.coffeeshop.serivce;
 
-import com.sotogito.coffeeshop.dao.UserPurchaseFileWriter;
+import com.sotogito.coffeeshop.dao.PaymentFileWriter;
 import com.sotogito.coffeeshop.exception.EmptyCartException;
+import com.sotogito.coffeeshop.exception.UserAmountShortException;
 import com.sotogito.coffeeshop.exception.UserAmountShortThanMinPriceException;
 import com.sotogito.coffeeshop.exception.UserAmountZeroException;
 import com.sotogito.coffeeshop.model.Product;
+import com.sotogito.coffeeshop.model.Shop;
 import com.sotogito.coffeeshop.model.User;
 
 
 public class UserOrderService {
-    private UserPurchaseFileWriter userPurchaseFileWriter = new UserPurchaseFileWriter();
+    private PaymentFileWriter paymentFileWriter = new PaymentFileWriter();
 
     public void chargeAmount(User user, int amount) {
         user.chargeAmount(amount);
@@ -17,6 +19,10 @@ public class UserOrderService {
 
     ///  그냥 상품을 추가하기만 함
     public void addCartByOne(User user, Product product) {
+        validateZeroAmount(user);
+        validateOverAmountByMinProduct(user, Shop.getMinimumPrice());
+        validateAmountAfterPurchase(user,product.getPrice());
+
         user.addCart(product);
     }
 
@@ -27,7 +33,7 @@ public class UserOrderService {
             throw new EmptyCartException("장바구니가 비어있어요.");
         }
         user.purchase();
-        user.updatePurchaseFile(userPurchaseFileWriter);
+        user.updatePaymentFile(paymentFileWriter);
         user.clearCart();
     }
 
@@ -46,5 +52,12 @@ public class UserOrderService {
             throw new UserAmountZeroException("잔액이 없습니다.");
         }
     }
+
+    private void validateAmountAfterPurchase(User user, int productPrice) {
+        if(user.isNegativeAmountAfterPurchase(productPrice)) {
+            throw new UserAmountShortException("해당상품을 구매할 잔액이 부족합니다.");
+        }
+    }
+
 
 }

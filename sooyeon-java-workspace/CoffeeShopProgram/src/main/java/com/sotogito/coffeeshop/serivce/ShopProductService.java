@@ -1,4 +1,4 @@
-package com.sotogito.serivce;
+package com.sotogito.coffeeshop.serivce;
 
 import com.sotogito.coffeeshop.model.Product;
 import com.sotogito.coffeeshop.model.Shop;
@@ -7,18 +7,12 @@ import java.util.List;
 
 public class ShopProductService {
     private final Shop shop;
-    private int minimumPrice;
 
     public ShopProductService(Shop shop) {
         this.shop = shop;
-        minimumPrice = this.shop.findMinimumPrice();
     }
 
-
     public void addNewProduct(Product product) {
-        if (product.getPrice() < minimumPrice) {
-            minimumPrice = product.getPrice();
-        }
         shop.addProduct(product);
     }
 
@@ -29,10 +23,6 @@ public class ShopProductService {
 
     public Product findProductByName(String name) {
         return shop.findProductByName(name);
-    }
-
-    public int getMinimumPrice() {
-        return minimumPrice;
     }
 
     public List<Product> getCoffeeList() {

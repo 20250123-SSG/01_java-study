@@ -14,6 +14,8 @@ public class Shop {
     private String address;
     private final EnumMap<ProductType, List<Product>> products = new EnumMap<>(ProductType.class);
 
+    private static int minimumPrice;
+
     {
         List<Product> coffees = new ArrayList<>();
         List<Product> breads = new ArrayList<>();
@@ -27,6 +29,7 @@ public class Shop {
 
         products.put(ProductType.COFFEE, coffees);
         products.put(ProductType.BREAD, breads);
+        minimumPrice = findMinimumPrice();
     }
 
 
@@ -41,6 +44,10 @@ public class Shop {
 
 
     public void addProduct(Product product) {
+        if (product.getPrice() < minimumPrice) {
+            minimumPrice = product.getPrice();
+        }
+
         List<Product> result = products.get(product.getType());
 
         if (!result.contains(product)) {
@@ -114,6 +121,10 @@ public class Shop {
 
     public Shop getOriginalShopContainInfo() {
         return new Shop(masterId, name, address);
+    }
+
+    public static int getMinimumPrice() {
+        return minimumPrice;
     }
 
 

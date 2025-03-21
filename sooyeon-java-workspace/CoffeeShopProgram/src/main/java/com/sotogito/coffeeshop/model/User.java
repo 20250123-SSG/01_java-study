@@ -1,7 +1,7 @@
 package com.sotogito.coffeeshop.model;
 
 import com.sotogito.coffeeshop.common.Role;
-import com.sotogito.coffeeshop.dao.UserPurchaseFileWriter;
+import com.sotogito.coffeeshop.dao.PaymentFileWriter;
 import com.sotogito.coffeeshop.exception.MinimumChargeException;
 import com.sotogito.coffeeshop.exception.UserAmountShortException;
 
@@ -48,7 +48,7 @@ public class User {
         amount = balance;
     }
 
-    public void updatePurchaseFile(UserPurchaseFileWriter writer){
+    public void updatePaymentFile(PaymentFileWriter writer){
         writer.paymentFileSave(name,cart.getOrders());
     }
 
@@ -58,11 +58,15 @@ public class User {
     }
 
     public boolean isOverAmountThanProductPrice(int price) {
-        return amount >= price;
+        return getBalance() >= price;
     }
 
     public boolean isZeroAmount() {
-        return amount == 0;
+        return getBalance() == 0;
+    }
+
+    public boolean isNegativeAmountAfterPurchase(int productPrice) {
+        return getBalance() - productPrice < 0;
     }
 
     public String getId() {

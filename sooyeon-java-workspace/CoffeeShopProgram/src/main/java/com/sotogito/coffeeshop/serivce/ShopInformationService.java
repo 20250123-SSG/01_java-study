@@ -1,4 +1,4 @@
-package com.sotogito.serivce;
+package com.sotogito.coffeeshop.serivce;
 
 import com.sotogito.coffeeshop.model.Shop;
 

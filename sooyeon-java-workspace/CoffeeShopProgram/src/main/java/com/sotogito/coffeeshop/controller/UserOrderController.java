@@ -1,7 +1,8 @@
 package com.sotogito.coffeeshop.controller;
 
-import com.sotogito.serivce.ShopProductService;
-import com.sotogito.serivce.UserOrderService;
+import com.sotogito.coffeeshop.model.Shop;
+import com.sotogito.coffeeshop.serivce.ShopProductService;
+import com.sotogito.coffeeshop.serivce.UserOrderService;
 import com.sotogito.coffeeshop.model.Product;
 import com.sotogito.coffeeshop.model.User;
 
@@ -15,11 +16,8 @@ public class UserOrderController {
     }
 
     public void addCart(User user, String productName) {
-        validateCanPurchaseStatus(user);
-
         Product product = shopProductManager.findProductByName(productName);
         userOrderManager.addCartByOne(user, product);
-       // Sales.SALES.add(product);
     }
 
     public void purchaseAllInCart(User user) {
@@ -38,11 +36,9 @@ public class UserOrderController {
         userOrderManager.clearCart(user);
     }
 
-
-
     public void validateCanPurchaseStatus(User user) {
         userOrderManager.validateZeroAmount(user);
-        userOrderManager.validateOverAmountByMinProduct(user, shopProductManager.getMinimumPrice());
+        userOrderManager.validateOverAmountByMinProduct(user, Shop.getMinimumPrice());
     }
 
 }

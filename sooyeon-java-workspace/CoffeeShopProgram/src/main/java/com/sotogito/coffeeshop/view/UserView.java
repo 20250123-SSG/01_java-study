@@ -26,11 +26,11 @@ public class UserView {
             System.out.println("""
                     1. 사용자 정보 조회
                     2. 장바구니 조회
-                    3. 메뉴 주문 하기
+                    3. 장바구니 메뉴 전체 구매
+                    4. 메뉴 주문 하기
                     0. 종료하기
                     """);
-            int functionNum = sc.nextInt();
-            sc.nextLine();
+            int functionNum = Integer.parseInt(sc.nextLine());
 
             if (functionNum == 0) {
                 return;
@@ -40,7 +40,9 @@ public class UserView {
                 chargeAmount(user);
             } else if (functionNum == 2) {
                 printCartList(user);
-            } else if (functionNum == 3) {
+            } else if(functionNum == 3) {
+                purchase(user);
+            }else if (functionNum == 4) {
                 order(user);
             }
         }
@@ -89,11 +91,19 @@ public class UserView {
         }
 
         System.out.println("구매 후 잔액 : "+user.getBalance());
+    }
+
+    public void purchase(User user) {
         System.out.println("구매하시겠습니까? (y/n)");
         boolean canPurchase = sc.nextLine().equalsIgnoreCase("y");
 
         if(canPurchase) {
-            userOrderController.purchaseAllInCart(user);
+            try {
+                userOrderController.purchaseAllInCart(user);
+            } catch (EmptyCartException e) {
+                System.out.println(e.getMessage());
+                return;
+            }
             System.out.println("구매 완료되었습니다.");
             return;
         }

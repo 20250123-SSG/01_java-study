@@ -9,9 +9,9 @@ import com.sotogito.coffeeshop.dao.*;
 import com.sotogito.coffeeshop.exception.DuplicateIdException;
 import com.sotogito.coffeeshop.model.Shop;
 import com.sotogito.coffeeshop.model.User;
-import com.sotogito.serivce.ShopInformationService;
-import com.sotogito.serivce.ShopProductService;
-import com.sotogito.serivce.UserOrderService;
+import com.sotogito.coffeeshop.serivce.ShopInformationService;
+import com.sotogito.coffeeshop.serivce.ShopProductService;
+import com.sotogito.coffeeshop.serivce.UserOrderService;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -35,7 +35,7 @@ public class CoffeeShopView {
 
         ShopInformationService shopInformationManager = new ShopInformationService(shop);
         ShopProductService productManager = new ShopProductService(shop);
-        UserPurchaseFileWriter fileMaker = new UserPurchaseFileWriter();
+        PaymentFileWriter fileMaker = new PaymentFileWriter();
 
 
         userController = new UserController(userRepository);
@@ -56,7 +56,7 @@ public class CoffeeShopView {
             String id = scanner.nextLine();
             String pwd = scanner.nextLine();
 
-            if(Objects.equals(id, "0") || pwd.equals("0")){
+            if(id.equals("0") || pwd.equals("0")){
                 return;
             }
             User user = getUser(id, pwd);
