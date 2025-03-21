@@ -21,7 +21,7 @@ public enum CoffeeShopSeller {
    }
 
     public  Map<String, List<PaymentDetailsDTO>> getPaymentDetailsByUser(User user) {
-        return reader.readAllPaymentDetails();
+        return reader.readUserPaymentDetails(user);
     }
 
 

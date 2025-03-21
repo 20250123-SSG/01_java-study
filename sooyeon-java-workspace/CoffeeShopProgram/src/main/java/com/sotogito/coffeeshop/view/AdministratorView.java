@@ -101,70 +101,15 @@ public class AdministratorView {
         }
 
         Map<String, List<PaymentDetailsDTO>> paymentDetails = CoffeeShopSeller.COFFEE_SHOP_SELLER.getPaymentDetailsByUser(user.get());
+        if(paymentDetails.isEmpty()) {
+            System.out.println("구매내역이 없습니다.");
+            return;
+        }
         for(String key : paymentDetails.keySet()) {
             System.out.println(PaymentPrinter.getPrintout(key, paymentDetails.get(key)));
         }
         System.out.println("조회완료");
     }
-
-
-
-// todo
-/*
-    public void manageShopSales() {
-        System.out.println("=====가게 매출 관리 페이지=====");
-        while (true) {
-            System.out.println("""
-                    1. 전체 판매 내역 조회
-                    2. 특정 고객 구매 내역 조회
-                    0. 뒤로가기
-                    """);
-            int functionNum = Integer.parseInt(sc.nextLine());
-
-            if (functionNum == 0) {
-                return;
-            }
-            if (functionNum == 1) {
-                printSalesHistory();
-            } else if (functionNum == 2) {
-                showUserPurchaseHistory();
-            }
-
-        }
-    }
-
-    public void printSalesHistory() {
-        System.out.println(CoffeeShopSeller.SALES);
-        System.out.printf(CoffeeShopSeller.PRINT_TOTAL_SALES_AMOUNT, CoffeeShopSeller.SALES.getTotalSalesAmount());
-    }
-
-    public void showUserPurchaseHistory() {
-        System.out.println("조회하고 싶은 회원의 id를 입력하세요.");
-        String id = sc.nextLine();
-
-        Optional<User> user = userController.findUserById(id);
-        if (user.isEmpty()) {
-            System.out.println("존재하지 않는 회원입니다.");
-            return;
-        }
-
-        Map<Product, Integer> orders = user.get().getOrders();
-        if (orders.isEmpty()) {
-            System.out.println("주문 내역이 없습니다.");
-            return;
-        }
-        for (Map.Entry<Product, Integer> entry : orders.entrySet()) {
-            String productName = entry.getKey().getName();
-            int count = entry.getValue();
-            System.out.printf("%s : %d개\n", productName, count);
-        }
-    }
-
-
- */
-
-
-
 
 
     public void manageShopProduct() {

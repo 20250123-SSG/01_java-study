@@ -1,6 +1,7 @@
 package com.sotogito.coffeeshop.dao;
 
 import com.sotogito.coffeeshop.dto.PaymentDetailsDTO;
+import com.sotogito.coffeeshop.model.User;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -34,6 +35,37 @@ public class PaymentFileReader {
         return result;
     }
 
+    public Map<String, List<PaymentDetailsDTO>> readUserPaymentDetails(User user) {
+        File paymentFolder = new File("payment");
+        File[] paymentFileList = paymentFolder.listFiles();
+
+        if (paymentFileList == null) {
+            return  new HashMap<>();
+        }
+
+        Map<String, List<PaymentDetailsDTO>> result = new HashMap<>();
+
+        String selectedUserName = user.getName();
+        for(File paymentFile : paymentFileList) {
+            String fileName = paymentFile.getName();
+            String userName = fileName.substring(0, fileName.indexOf("_"));
+
+            if(!userName.equals(selectedUserName)) {
+                continue;
+            }
+
+            List<PaymentDetailsDTO> paymentDetails = getUserPaymentDetails(result, userName);
+
+            if(paymentDetails.isEmpty()) {
+                result.put(userName, paymentDetails);
+            }
+            readByOneFile(paymentDetails, fileName);
+        }
+        return result;
+    }
+
+
+
     private void readByOneFile( List<PaymentDetailsDTO> paymentDetails, String fileName) {
         try (BufferedReader reader = new BufferedReader(new FileReader("payment\\" + fileName))) {
             String line;
@@ -54,7 +86,7 @@ public class PaymentFileReader {
             e.printStackTrace();
         }
     }
-    
+
     private List<PaymentDetailsDTO> getUserPaymentDetails(Map<String, List<PaymentDetailsDTO>> result, String userName) {
         if(result.containsKey(userName)) {
             return result.get(userName);
