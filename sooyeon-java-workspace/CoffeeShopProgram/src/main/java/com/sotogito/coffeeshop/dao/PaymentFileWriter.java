@@ -11,7 +11,6 @@ import java.util.Map;
 
 
 public class PaymentFileWriter {
-    private final static String SALES_FILE_PATH = "";
     private final static String USER_PAYMENT_ORDERS_FORMAT = "%s,%d,%d\n";
 
     public void paymentFileSave(String userName, Map<Product, Integer> cartList) {
@@ -29,8 +28,8 @@ public class PaymentFileWriter {
                 int quantity = entry.getValue();
                 int amount = product.getPrice() * quantity;
 
-                String line = String.format(USER_PAYMENT_ORDERS_FORMAT, product.getName(),amount, quantity);
-                writer.write(line); // 줄바꿈 포함되어 있으므로 newLine() 필요 없음
+                String line = String.format(USER_PAYMENT_ORDERS_FORMAT, product.getName(), amount, quantity);
+                writer.write(line);
             }
 
         } catch (IOException e) {

@@ -1,7 +1,7 @@
 package com.sotogito.coffeeshop.dao;
 
 import com.sotogito.coffeeshop.common.Role;
-import com.sotogito.coffeeshop.exception.DuplicateIdException;
+import com.sotogito.coffeeshop.exception.user.DuplicateIdException;
 import com.sotogito.coffeeshop.model.User;
 
 import java.util.*;
@@ -17,6 +17,7 @@ public class UserRepository {
         users.add(new User("rjwl", "rjwl", "거지", 30, Role.USER));
         users.add(new User("qwe", "qwe", "qwe", 0, Role.USER));
     }
+
 
     public void addUser(User user) {
         if (users.contains(user)) {

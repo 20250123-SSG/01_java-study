@@ -2,7 +2,7 @@ package com.sotogito.coffeeshop.serivce;
 
 import com.sotogito.coffeeshop.common.Role;
 import com.sotogito.coffeeshop.dao.UserRepository;
-import com.sotogito.coffeeshop.exception.NoSuchUserException;
+import com.sotogito.coffeeshop.exception.user.NoSuchUserException;
 import com.sotogito.coffeeshop.model.User;
 
 import java.util.Optional;
@@ -13,6 +13,7 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
 
     public Optional<User> login(String id, String password) {
         return userRepository.findByIdAndPassword(id, password);
@@ -26,7 +27,7 @@ public class UserService {
 
     public User findUserById(String id) {
         Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()){
+        if (user.isEmpty()) {
             throw new NoSuchUserException("그런사람업슴다");
         }
         return user.get();

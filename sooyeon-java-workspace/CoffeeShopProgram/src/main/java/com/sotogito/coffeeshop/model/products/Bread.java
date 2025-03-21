@@ -1,7 +1,7 @@
 package com.sotogito.coffeeshop.model.products;
 
 import com.sotogito.coffeeshop.common.ProductType;
-import com.sotogito.coffeeshop.exception.ProductInformationUpdateException;
+import com.sotogito.coffeeshop.exception.product.ProductInformationUpdateException;
 import com.sotogito.coffeeshop.model.Product;
 
 import java.util.Objects;

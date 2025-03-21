@@ -8,6 +8,5 @@ public class Application {
         CoffeeShopView coffeeShopView = new CoffeeShopView();
         coffeeShopView.run();
 
-
     }
 }

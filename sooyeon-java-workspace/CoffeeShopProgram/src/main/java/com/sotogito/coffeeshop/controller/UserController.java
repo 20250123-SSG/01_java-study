@@ -6,11 +6,12 @@ import com.sotogito.coffeeshop.serivce.UserService;
 import java.util.Optional;
 
 public class UserController {
-   private UserService userService;
+    private UserService userService;
 
-   public UserController(UserService userService) {
-       this.userService = userService;
-   }
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
 
     public Optional<User> login(String id, String password) {
         return userService.login(id, password);

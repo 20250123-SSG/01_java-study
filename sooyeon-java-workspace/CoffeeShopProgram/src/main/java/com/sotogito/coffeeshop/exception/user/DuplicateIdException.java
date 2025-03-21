@@ -1,4 +1,4 @@
-package com.sotogito.coffeeshop.exception;
+package com.sotogito.coffeeshop.exception.user;
 
 public class DuplicateIdException extends RuntimeException {
     public DuplicateIdException(String message) {

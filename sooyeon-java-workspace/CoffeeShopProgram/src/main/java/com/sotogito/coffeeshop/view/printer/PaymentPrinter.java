@@ -12,7 +12,7 @@ public class PaymentPrinter {
         StringBuilder sb = new StringBuilder();
         int totalAmount = 0;
 
-        for(PaymentDetailsDTO detail : details) {
+        for (PaymentDetailsDTO detail : details) {
             String productName = detail.productName();
             int amount = detail.amount();
             int quantity = detail.quantity();

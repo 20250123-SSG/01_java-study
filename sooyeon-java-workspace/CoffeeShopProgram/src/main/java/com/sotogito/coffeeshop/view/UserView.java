@@ -2,7 +2,8 @@ package com.sotogito.coffeeshop.view;
 
 import com.sotogito.coffeeshop.controller.ShopProductController;
 import com.sotogito.coffeeshop.controller.UserOrderController;
-import com.sotogito.coffeeshop.exception.*;
+import com.sotogito.coffeeshop.exception.order.*;
+import com.sotogito.coffeeshop.exception.product.NoSuchProductException;
 import com.sotogito.coffeeshop.model.Product;
 import com.sotogito.coffeeshop.model.User;
 
@@ -36,21 +37,18 @@ public class UserView {
                 return;
             }
             if (functionNum == 1) {
-                printUserInformation(user);
+                System.out.println(user);
                 chargeAmount(user);
             } else if (functionNum == 2) {
                 printCartList(user);
-            } else if(functionNum == 3) {
+            } else if (functionNum == 3) {
                 purchase(user);
-            }else if (functionNum == 4) {
+            } else if (functionNum == 4) {
                 order(user);
             }
         }
     }
 
-    public void printUserInformation(User user) {
-        System.out.println(user);
-    }
 
     public void chargeAmount(User user) {
         System.out.println("금액을 충전하시겠나요? y/n");
@@ -92,36 +90,36 @@ public class UserView {
             System.out.println(entry.getKey().getName() + " : " + entry.getValue());
         }
 
-        System.out.println("구매 후 잔액 : "+user.getBalance());
+        System.out.println("구매 후 잔액 : " + user.getBalance());
     }
 
     public void purchase(User user) {
         System.out.println("구매하시겠습니까? (y/n)");
         boolean canPurchase = sc.nextLine().equalsIgnoreCase("y");
 
-        if(canPurchase) {
-            try {
-                userOrderController.purchaseAllInCart(user);
-            } catch (EmptyCartException e) {
-                System.out.println(e.getMessage());
-                return;
+        if (!canPurchase) {
+            System.out.println("""
+                    1. 장바구니 비우기
+                    2. 계속 구매하기
+                    """);
+            int functionNum = Integer.parseInt(sc.nextLine());
+
+            if (functionNum == 1) {
+                userOrderController.clearCart(user);
+                System.out.println("장바구니가 비워졌습니다.");
+            } else {
+                System.out.println("구매를 계속 진행합니다.");
             }
-            System.out.println("구매 완료되었습니다.");
             return;
         }
 
-        System.out.println("""
-                1. 장바구니 비우기
-                2. 계속 구매하기
-                """);
-        int functionNum = Integer.parseInt(sc.nextLine());
-
-        if(functionNum == 1){
-            userOrderController.clearCart(user);
-            System.out.println("장바구니가 비워졌습니다.");
-        }else {
-            System.out.println("구매를 계속 진행합니다.");
+        try {
+            userOrderController.purchaseAllInCart(user);
+        } catch (EmptyCartException e) {
+            System.out.println(e.getMessage());
+            return;
         }
+        System.out.println("구매 완료되었습니다.");
     }
 
     public void order(User user) {

@@ -1,8 +1,8 @@
 package com.sotogito.coffeeshop.model;
 
 import com.sotogito.coffeeshop.common.ProductType;
-import com.sotogito.coffeeshop.exception.DuplicateProductException;
-import com.sotogito.coffeeshop.exception.NoSuchProductException;
+import com.sotogito.coffeeshop.exception.product.DuplicateProductException;
+import com.sotogito.coffeeshop.exception.product.NoSuchProductException;
 import com.sotogito.coffeeshop.model.products.Bread;
 import com.sotogito.coffeeshop.model.products.Coffee;
 
@@ -33,9 +33,6 @@ public class Shop {
         minimumPrice = findMinimumPrice();
     }
 
-
-    public Shop() {
-    }
 
     public Shop(int masterId, String name, String address) {
         this.masterId = masterId;

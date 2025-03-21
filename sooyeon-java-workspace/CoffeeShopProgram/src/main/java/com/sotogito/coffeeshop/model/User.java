@@ -2,8 +2,8 @@ package com.sotogito.coffeeshop.model;
 
 import com.sotogito.coffeeshop.common.Role;
 import com.sotogito.coffeeshop.dao.PaymentFileWriter;
-import com.sotogito.coffeeshop.exception.MinimumChargeException;
-import com.sotogito.coffeeshop.exception.UserAmountShortException;
+import com.sotogito.coffeeshop.exception.order.MinimumChargeException;
+import com.sotogito.coffeeshop.exception.order.UserAmountShortException;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ public class User {
     private final String id;
     private final String password;
     private final String name;
-    private  int amount;
+    private int amount;
     private final Role role;
 
     private final Cart cart;
@@ -25,6 +25,7 @@ public class User {
         this.cart = new Cart();
     }
 
+
     public void addCart(Product product) {
         cart.addCart(product);
     }
@@ -36,25 +37,16 @@ public class User {
         this.amount += amount;
     }
 
-    public boolean isEmptyCart(){
-        return cart.isEmpty();
-    }
-
     public void purchase() {
         int balance = cart.calculateBalance(amount);
-        if(balance < 0) {
+        if (balance < 0) {
             throw new UserAmountShortException("잔액이 부족하여 최종구매할 수 없습니다..");
         }
         amount = balance;
     }
 
-    public void updatePaymentFile(PaymentFileWriter writer){
-        writer.paymentFileSave(name,cart.getOrders());
-    }
-
-
-    public Map<Product, Integer> getOrders() {
-       return cart.getOrders();
+    public void updatePaymentFile(PaymentFileWriter writer) {
+        writer.paymentFileSave(name, cart.getOrders());
     }
 
     public boolean isOverAmountThanProductPrice(int price) {
@@ -65,8 +57,16 @@ public class User {
         return getBalance() == 0;
     }
 
+    public boolean isEmptyCart() {
+        return cart.isEmpty();
+    }
+
     public boolean isNegativeAmountAfterPurchase(int productPrice) {
         return getBalance() - productPrice < 0;
+    }
+
+    public Map<Product, Integer> getOrders() {
+        return cart.getOrders();
     }
 
     public String getId() {
@@ -92,7 +92,6 @@ public class User {
     public void clearCart() {
         cart.clear();
     }
-
 
 
     @Override

@@ -1,7 +1,6 @@
 package com.sotogito.coffeeshop.controller;
 
 import com.sotogito.coffeeshop.dto.PaymentDetailsDTO;
-import com.sotogito.coffeeshop.exception.EmptyPaymentHistory;
 import com.sotogito.coffeeshop.model.User;
 import com.sotogito.coffeeshop.serivce.CoffeeShopSeller;
 import com.sotogito.coffeeshop.serivce.ShopInformationService;
@@ -42,7 +41,7 @@ public class ShopInformationController {
         return CoffeeShopSeller.COFFEE_SHOP_SELLER.getPaymentDetails();
     }
 
-    public  Map<String, List<PaymentDetailsDTO>> getPaymentDetailsByUser(User user) {
+    public Map<String, List<PaymentDetailsDTO>> getPaymentDetailsByUser(User user) {
         return CoffeeShopSeller.COFFEE_SHOP_SELLER.getPaymentDetailsByUser(user);
     }
 

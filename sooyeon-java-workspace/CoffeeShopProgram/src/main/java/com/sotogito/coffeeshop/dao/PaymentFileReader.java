@@ -16,18 +16,18 @@ public class PaymentFileReader {
         File[] paymentFileList = paymentFolder.listFiles();
 
         if (paymentFileList == null) {
-            return  new HashMap<>();
+            return new HashMap<>();
         }
 
         Map<String, List<PaymentDetailsDTO>> result = new HashMap<>();
 
-        for(File paymentFile : paymentFileList) {
+        for (File paymentFile : paymentFileList) {
             String fileName = paymentFile.getName();
             String userName = fileName.substring(0, fileName.indexOf("_"));
 
             List<PaymentDetailsDTO> paymentDetails = getUserPaymentDetails(result, userName);
 
-            if(paymentDetails.isEmpty()) {
+            if (paymentDetails.isEmpty()) {
                 result.put(userName, paymentDetails);
             }
             readByOneFile(paymentDetails, fileName);
@@ -40,23 +40,23 @@ public class PaymentFileReader {
         File[] paymentFileList = paymentFolder.listFiles();
 
         if (paymentFileList == null) {
-            return  new HashMap<>();
+            return new HashMap<>();
         }
 
         Map<String, List<PaymentDetailsDTO>> result = new HashMap<>();
 
         String selectedUserName = user.getName();
-        for(File paymentFile : paymentFileList) {
+        for (File paymentFile : paymentFileList) {
             String fileName = paymentFile.getName();
             String userName = fileName.substring(0, fileName.indexOf("_"));
 
-            if(!userName.equals(selectedUserName)) {
+            if (!userName.equals(selectedUserName)) {
                 continue;
             }
 
             List<PaymentDetailsDTO> paymentDetails = getUserPaymentDetails(result, userName);
 
-            if(paymentDetails.isEmpty()) {
+            if (paymentDetails.isEmpty()) {
                 result.put(userName, paymentDetails);
             }
             readByOneFile(paymentDetails, fileName);
@@ -65,12 +65,11 @@ public class PaymentFileReader {
     }
 
 
-
-    private void readByOneFile( List<PaymentDetailsDTO> paymentDetails, String fileName) {
+    private void readByOneFile(List<PaymentDetailsDTO> paymentDetails, String fileName) {
         try (BufferedReader reader = new BufferedReader(new FileReader("payment\\" + fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                for(String paymentLine : line.split("\n")) {
+                for (String paymentLine : line.split("\n")) {
                     String[] token = paymentLine.split(",");
 
                     String productName = token[0];
@@ -88,12 +87,10 @@ public class PaymentFileReader {
     }
 
     private List<PaymentDetailsDTO> getUserPaymentDetails(Map<String, List<PaymentDetailsDTO>> result, String userName) {
-        if(result.containsKey(userName)) {
+        if (result.containsKey(userName)) {
             return result.get(userName);
         }
         return new ArrayList<>();
     }
-
-
 
 }
