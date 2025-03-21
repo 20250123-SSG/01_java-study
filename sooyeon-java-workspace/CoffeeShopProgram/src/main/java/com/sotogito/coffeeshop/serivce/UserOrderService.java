@@ -9,6 +9,8 @@ import com.sotogito.coffeeshop.model.Product;
 import com.sotogito.coffeeshop.model.Shop;
 import com.sotogito.coffeeshop.model.User;
 
+import java.util.Map;
+
 
 public class UserOrderService {
     private PaymentFileWriter paymentFileWriter = new PaymentFileWriter();
@@ -17,7 +19,6 @@ public class UserOrderService {
         user.chargeAmount(amount);
     }
 
-    ///  그냥 상품을 추가하기만 함
     public void addCartByOne(User user, Product product) {
         validateZeroAmount(user);
         validateOverAmountByMinProduct(user, Shop.getMinimumPrice());
@@ -26,8 +27,6 @@ public class UserOrderService {
         user.addCart(product);
     }
 
-    ///  상품들 payment 파일에 저장
-    /// 결제
     public void purchase(User user) {
         if(user.isEmptyCart()){
             throw new EmptyCartException("장바구니가 비어있어요.");
@@ -37,9 +36,18 @@ public class UserOrderService {
         user.clearCart();
     }
 
+    public Map<Product, Integer> getCart(User user) {
+        Map<Product, Integer> orders = user.getOrders();
+        if (orders.isEmpty()) {
+            throw new EmptyCartException("장바구니가 비어있어요.");
+        }
+        return orders;
+    }
+
     public void clearCart(User user) {
         user.clearCart();
     }
+
 
     public void validateOverAmountByMinProduct(User user, int minPrice) {
         if (!user.isOverAmountThanProductPrice(minPrice)) {
@@ -58,6 +66,5 @@ public class UserOrderService {
             throw new UserAmountShortException("해당상품을 구매할 잔액이 부족합니다.");
         }
     }
-
 
 }

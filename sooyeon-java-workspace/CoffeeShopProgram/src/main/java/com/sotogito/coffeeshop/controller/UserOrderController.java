@@ -6,26 +6,32 @@ import com.sotogito.coffeeshop.serivce.UserOrderService;
 import com.sotogito.coffeeshop.model.Product;
 import com.sotogito.coffeeshop.model.User;
 
+import java.util.Map;
+
 public class UserOrderController {
-    private final UserOrderService userOrderManager;
-    private final ShopProductService shopProductManager;
+    private final UserOrderService userOrderService;
+    private final ShopProductService shopProductService;
 
     public UserOrderController(UserOrderService userOrderManager, ShopProductService shopProductManager) {
-        this.userOrderManager = userOrderManager;
-        this.shopProductManager = shopProductManager;
+        this.userOrderService = userOrderManager;
+        this.shopProductService = shopProductManager;
     }
 
     public void addCart(User user, String productName) {
-        Product product = shopProductManager.findProductByName(productName);
-        userOrderManager.addCartByOne(user, product);
+        Product product = shopProductService.findProductByName(productName);
+        userOrderService.addCartByOne(user, product);
     }
 
     public void purchaseAllInCart(User user) {
-        userOrderManager.purchase(user);
+        userOrderService.purchase(user);
     }
 
     public void changeAmount(User user, int amount) {
-        userOrderManager.chargeAmount(user, amount);
+        userOrderService.chargeAmount(user, amount);
+    }
+
+    public Map<Product, Integer> getCart(User user) {
+        return userOrderService.getCart(user);
     }
 
     public int getUserBalance(User user) {
@@ -33,12 +39,12 @@ public class UserOrderController {
     }
 
     public void clearCart(User user) {
-        userOrderManager.clearCart(user);
+        userOrderService.clearCart(user);
     }
 
     public void validateCanPurchaseStatus(User user) {
-        userOrderManager.validateZeroAmount(user);
-        userOrderManager.validateOverAmountByMinProduct(user, Shop.getMinimumPrice());
+        userOrderService.validateZeroAmount(user);
+        userOrderService.validateOverAmountByMinProduct(user, Shop.getMinimumPrice());
     }
 
 }

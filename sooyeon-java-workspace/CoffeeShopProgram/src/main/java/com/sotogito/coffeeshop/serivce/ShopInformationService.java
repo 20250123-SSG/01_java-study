@@ -18,7 +18,6 @@ public class ShopInformationService {
         return shop.getOriginalShopContainInfo();
     }
 
-
     public void editShopName(String newName) {
         shop.setName(newName);
     }

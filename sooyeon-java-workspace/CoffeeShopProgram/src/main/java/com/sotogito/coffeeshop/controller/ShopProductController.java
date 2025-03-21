@@ -6,28 +6,27 @@ import com.sotogito.coffeeshop.model.Product;
 import java.util.List;
 
 public class ShopProductController {
-    private final ShopProductService shopProductManager;
+    private final ShopProductService shopProductService;
 
     public ShopProductController(ShopProductService shopProductManager) {
-        this.shopProductManager = shopProductManager;
+        this.shopProductService = shopProductManager;
     }
 
 
     public void addNewProduct(Product product) {
-        shopProductManager.addNewProduct(product);
+        shopProductService.addNewProduct(product);
     }
 
     public void deleteProductByName(String productName) {
-        shopProductManager.deleteProductByName(productName);
+        shopProductService.deleteProductByName(productName);
     }
 
-
     public List<Product> getCoffeeList() {
-        return shopProductManager.getCoffeeList();
+        return shopProductService.getCoffeeList();
     }
 
     public List<Product> getBreadList() {
-        return shopProductManager.getBreadList();
+        return shopProductService.getBreadList();
     }
 
 }

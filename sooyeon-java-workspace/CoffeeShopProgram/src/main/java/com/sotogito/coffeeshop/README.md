@@ -38,27 +38,3 @@
     3) 메뉴 주문 하기
     	  ㄴ 커피목록, 빵목록 조회
     	  ㄴ 반복적으로 주문 가능
----
-# TODO
-- 사용자 구매 종료 조건 생각
-  - 사용자 잔액이 0원일 때
-  - 사용자 잔액이 상품의 최소 금액보다 적을 때
-
-- 구매 재입력 조건
-  - 존재하지 않는 상품일 때
-
-# 컨트롤러의 종류
-1. UserController : 로그인
-	- UserRepository
-   
-2. UserOrderController : 사용자 주문, 잔액
-	- UserOrderManager
-    - ShopProductManager
-
-3. ShopInformationController : 샵 정보 반환 + 수정
-    - SHopInformationManager
-      - ShopInformationEditor
-
-4. ShopProductController
-   - ShopProductManager
-

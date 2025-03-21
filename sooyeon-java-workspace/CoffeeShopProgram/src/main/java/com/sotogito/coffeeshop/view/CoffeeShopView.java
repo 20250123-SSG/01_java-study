@@ -4,6 +4,7 @@ import com.sotogito.coffeeshop.common.Role;
 import com.sotogito.coffeeshop.controller.ShopInformationController;
 import com.sotogito.coffeeshop.controller.ShopProductController;
 import com.sotogito.coffeeshop.controller.UserController;
+import com.sotogito.coffeeshop.serivce.UserService;
 import com.sotogito.coffeeshop.controller.UserOrderController;
 import com.sotogito.coffeeshop.dao.*;
 import com.sotogito.coffeeshop.exception.DuplicateIdException;
@@ -13,7 +14,6 @@ import com.sotogito.coffeeshop.serivce.ShopInformationService;
 import com.sotogito.coffeeshop.serivce.ShopProductService;
 import com.sotogito.coffeeshop.serivce.UserOrderService;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -34,11 +34,12 @@ public class CoffeeShopView {
         UserOrderService orderManager = new UserOrderService();
 
         ShopInformationService shopInformationManager = new ShopInformationService(shop);
+        UserService userService = new UserService(userRepository);
         ShopProductService productManager = new ShopProductService(shop);
         PaymentFileWriter fileMaker = new PaymentFileWriter();
 
 
-        userController = new UserController(userRepository);
+        userController = new UserController(userService);
         userOrderController = new UserOrderController(orderManager,productManager);
         shopInformationController = new ShopInformationController(shopInformationManager);
         shopProductController = new ShopProductController(productManager);

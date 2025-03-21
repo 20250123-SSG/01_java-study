@@ -29,6 +29,7 @@ public class Shop {
 
         products.put(ProductType.COFFEE, coffees);
         products.put(ProductType.BREAD, breads);
+
         minimumPrice = findMinimumPrice();
     }
 
@@ -44,10 +45,7 @@ public class Shop {
 
 
     public void addProduct(Product product) {
-        if (product.getPrice() < minimumPrice) {
-            minimumPrice = product.getPrice();
-        }
-
+        updateMinimumPrice(product);
         List<Product> result = products.get(product.getType());
 
         if (!result.contains(product)) {
@@ -67,7 +65,6 @@ public class Shop {
         throw new NoSuchProductException("존재하지 않는 상품입니다.");
     }
 
-
     public Product findProductByName(String name) {
         return products.values().stream()
                 .flatMap(List::stream) //todo
@@ -75,17 +72,6 @@ public class Shop {
                 .findAny()
                 .orElseThrow(() -> new NoSuchProductException("존재하지 않는 상품입니다.: " + name));
     }
-
-    public int findMinimumPrice() {
-        List<Integer> productsPrice = new ArrayList<>();
-
-        products.values().stream()
-                .flatMap(List::stream)
-                .forEach(product -> productsPrice.add(product.getPrice()));
-
-        return Collections.min(productsPrice);
-    }
-
 
     public List<Product> getCoffees() {
         return Collections.unmodifiableList(products.get(ProductType.COFFEE));
@@ -135,5 +121,22 @@ public class Shop {
                 ", name='" + name + '\'' +
                 ", address='" + address;
     }
+
+    private void updateMinimumPrice(Product product) {
+        if (product.getPrice() < minimumPrice) {
+            minimumPrice = product.getPrice();
+        }
+    }
+
+    public int findMinimumPrice() {
+        List<Integer> productsPrice = new ArrayList<>();
+
+        products.values().stream()
+                .flatMap(List::stream)
+                .forEach(product -> productsPrice.add(product.getPrice()));
+
+        return Collections.min(productsPrice);
+    }
+
 
 }

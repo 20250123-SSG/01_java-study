@@ -2,6 +2,7 @@ package com.sotogito.coffeeshop.serivce;
 
 import com.sotogito.coffeeshop.dao.PaymentFileReader;
 import com.sotogito.coffeeshop.dto.PaymentDetailsDTO;
+import com.sotogito.coffeeshop.exception.EmptyPaymentHistory;
 import com.sotogito.coffeeshop.model.User;
 
 import java.util.List;
@@ -17,13 +18,19 @@ public enum CoffeeShopSeller {
     private final PaymentFileReader reader = new PaymentFileReader();
 
    public  Map<String, List<PaymentDetailsDTO>> getPaymentDetails() {
-       return reader.readAllPaymentDetails();
+       Map<String, List<PaymentDetailsDTO>> paymentDetails = reader.readAllPaymentDetails();
+       if (paymentDetails.isEmpty()) {
+           throw new EmptyPaymentHistory("비어있습니다.");
+       }
+       return paymentDetails;
    }
 
     public  Map<String, List<PaymentDetailsDTO>> getPaymentDetailsByUser(User user) {
-        return reader.readUserPaymentDetails(user);
+        Map<String, List<PaymentDetailsDTO>> paymentDetails =  reader.readUserPaymentDetails(user);
+        if (paymentDetails.isEmpty()) {
+            throw new EmptyPaymentHistory("구매 내역이 없습니다.");
+        }
+        return paymentDetails;
     }
-
-
 
 }

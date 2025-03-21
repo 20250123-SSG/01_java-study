@@ -12,6 +12,7 @@ public class ShopProductService {
         this.shop = shop;
     }
 
+
     public void addNewProduct(Product product) {
         shop.addProduct(product);
     }
@@ -19,7 +20,6 @@ public class ShopProductService {
     public void deleteProductByName(String productName) {
         shop.removeProduct(shop.findProductByName(productName));
     }
-
 
     public Product findProductByName(String name) {
         return shop.findProductByName(name);

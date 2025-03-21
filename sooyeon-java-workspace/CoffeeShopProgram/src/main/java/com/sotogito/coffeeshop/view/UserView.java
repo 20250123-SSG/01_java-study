@@ -76,16 +76,18 @@ public class UserView {
         } catch (MinimumChargeException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
 
     public void printCartList(User user) {
-        Map<Product, Integer> orders = user.getOrders();
-        if (orders.isEmpty()) {
-            System.out.println("장바구니가 비어있어요.");
+        Map<Product, Integer> orders = null;
+        try {
+            orders = userOrderController.getCart(user); //서비스까지끌고내려가야하나?
+        } catch (EmptyCartException e) {
+            System.out.println(e.getMessage());
             return;
         }
+
         for (Map.Entry<Product, Integer> entry : orders.entrySet()) {
             System.out.println(entry.getKey().getName() + " : " + entry.getValue());
         }

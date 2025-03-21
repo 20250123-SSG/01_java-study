@@ -3,11 +3,9 @@ package com.sotogito.coffeeshop.view;
 import com.sotogito.coffeeshop.controller.ShopInformationController;
 import com.sotogito.coffeeshop.controller.ShopProductController;
 import com.sotogito.coffeeshop.controller.UserController;
-import com.sotogito.coffeeshop.serivce.CoffeeShopSeller;
+import com.sotogito.coffeeshop.serivce.UserService;
+import com.sotogito.coffeeshop.exception.*;
 import com.sotogito.coffeeshop.dto.PaymentDetailsDTO;
-import com.sotogito.coffeeshop.exception.DuplicateProductException;
-import com.sotogito.coffeeshop.exception.NoSuchProductException;
-import com.sotogito.coffeeshop.exception.ProductInformationUpdateException;
 import com.sotogito.coffeeshop.model.*;
 import com.sotogito.coffeeshop.model.products.Bread;
 import com.sotogito.coffeeshop.model.products.Coffee;
@@ -82,7 +80,13 @@ public class AdministratorView {
     }
 
     private void printAllPaymentDetails() {
-        Map<String, List<PaymentDetailsDTO>> paymentDetails = CoffeeShopSeller.COFFEE_SHOP_SELLER.getPaymentDetails();
+        Map<String, List<PaymentDetailsDTO>> paymentDetails = null;
+        try {
+            paymentDetails = shopInformationController.getPaymentDetails();
+        } catch (EmptyPaymentHistory e) {
+            System.out.println(e.getMessage());
+            return;
+        }
 
         for(String key : paymentDetails.keySet()) {
             System.out.println(PaymentPrinter.getPrintout(key, paymentDetails.get(key)));
@@ -94,17 +98,22 @@ public class AdministratorView {
         System.out.println("조회하고 싶은 회원의 id를 입력하세요.");
         String id = sc.nextLine();
 
-        Optional<User> user = userController.findUserById(id);
-        if (user.isEmpty()) {
-            System.out.println("존재하지 않는 회원입니다.");
+        User user = null;
+        try {
+            user = userController.findUserById(id);
+        } catch (NoSuchUserException e) {
+            System.out.println(e.getMessage());
             return;
         }
 
-        Map<String, List<PaymentDetailsDTO>> paymentDetails = CoffeeShopSeller.COFFEE_SHOP_SELLER.getPaymentDetailsByUser(user.get());
-        if(paymentDetails.isEmpty()) {
-            System.out.println("구매내역이 없습니다.");
+        Map<String, List<PaymentDetailsDTO>> paymentDetails = null;
+        try {
+            paymentDetails = shopInformationController.getPaymentDetailsByUser(user);
+        } catch (EmptyPaymentHistory e) {
+            System.out.println(e.getMessage());
             return;
         }
+
         for(String key : paymentDetails.keySet()) {
             System.out.println(PaymentPrinter.getPrintout(key, paymentDetails.get(key)));
         }
