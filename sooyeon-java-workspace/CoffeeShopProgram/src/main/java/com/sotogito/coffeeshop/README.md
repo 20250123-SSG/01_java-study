@@ -38,33 +38,3 @@
     3) 메뉴 주문 하기
     	  ㄴ 커피목록, 빵목록 조회
     	  ㄴ 반복적으로 주문 가능
----
-### DTO
-- User
-  - Id
-  - Pwd
-  - Name
-  - amount
-
-- Shop
-  - Name
-  - Adress
-  - MasterId
-
-- Product(i)
-- Coffee
-  - Name
-  - Price
-
-- Bread
-  - Name
-  - Price
-
-#### 관리자 기능 
-- CoffeeShopManager
-  - 정보 수정 d
-  - 매출 관리
-
-#### 사용자 기능
-- List<Product>
-

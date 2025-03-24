@@ -1,64 +1,72 @@
 package com.sotogito.coffeeshop.model;
 
+import com.sotogito.coffeeshop.common.Role;
+import com.sotogito.coffeeshop.dao.PaymentFileWriter;
+import com.sotogito.coffeeshop.exception.order.MinimumChargeException;
+import com.sotogito.coffeeshop.exception.order.UserAmountShortException;
+
 import java.util.*;
 
 public class User {
-    private String id;
-    private String password;
-    private String name;
+    private final String id;
+    private final String password;
+    private final String name;
     private int amount;
-    private boolean idAdministrator;
+    private final Role role;
 
-    private final HashMap<Product, Integer> orders = new HashMap<>(); //상품 + 주문 개수
+    private final Cart cart;
 
-    public User() {
-    }
-
-    public User(String id, String password, String name, int amount) {
+    public User(String id, String password, String name, int amount, Role role) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.amount = amount;
+        this.role = role;
+        this.cart = new Cart();
     }
 
-    public User(String id, String password, String name, boolean idAdministrator) {
-        this.id = id;
-        this.password = password;
-        this.name = name;
-        this.idAdministrator = idAdministrator;
-    }
 
-    public void addOrder(Product product) {
-        if (orders.containsKey(product)) {
-            orders.put(product, orders.get(product) + 1);
-            return;
-        }
-        orders.put(product, 1);
+    public void addCart(Product product) {
+        cart.addCart(product);
     }
 
     public void chargeAmount(int amount) {
-        if(amount <= 0){
-            throw new IllegalArgumentException("1원 이상 입력해주세요.");
+        if (amount <= 0) {
+            throw new MinimumChargeException("1원 이상 입력해주세요.");
         }
         this.amount += amount;
     }
 
-    public void purchase(Product product) {
-        if (amount == 0) {
-            throw new IllegalArgumentException("잔액이 없습니다. 충전해주세요.");
+    public void purchase() {
+        int balance = cart.calculateBalance(amount);
+        if (balance < 0) {
+            throw new UserAmountShortException("잔액이 부족하여 최종구매할 수 없습니다..");
         }
+        amount = balance;
+    }
 
-        int purchaseAmount = product.getPrice();
-        if ((this.amount - purchaseAmount) <= 0) {
-            throw new IllegalArgumentException("잔액이 부족합니다.");
-        }
+    public void updatePaymentFile(PaymentFileWriter writer) {
+        writer.paymentFileSave(name, cart.getOrders());
+    }
 
-        this.amount -= purchaseAmount;
-        System.out.println(amount);
+    public boolean isOverAmountThanProductPrice(int price) {
+        return getBalance() >= price;
+    }
+
+    public boolean isZeroAmount() {
+        return getBalance() == 0;
+    }
+
+    public boolean isEmptyCart() {
+        return cart.isEmpty();
+    }
+
+    public boolean isNegativeAmountAfterPurchase(int productPrice) {
+        return getBalance() - productPrice < 0;
     }
 
     public Map<Product, Integer> getOrders() {
-        return Collections.unmodifiableMap(orders);
+        return cart.getOrders();
     }
 
     public String getId() {
@@ -73,12 +81,16 @@ public class User {
         return name;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getBalance() {
+        return cart.calculateBalance(amount);
     }
 
-    public boolean isIdAdministrator() {
-        return idAdministrator;
+    public Role getRole() {
+        return role;
+    }
+
+    public void clearCart() {
+        cart.clear();
     }
 
 
@@ -101,7 +113,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", amount=" + amount +
-                ", idAdministrator=" + idAdministrator +
                 '}';
     }
+
 }

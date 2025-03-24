@@ -1,34 +1,28 @@
 package com.sotogito.coffeeshop.controller;
 
-import com.sotogito.coffeeshop.dao.ShopProductManager;
-import com.sotogito.coffeeshop.dao.UserOrderManager;
-import com.sotogito.coffeeshop.model.Product;
 import com.sotogito.coffeeshop.model.User;
+import com.sotogito.coffeeshop.serivce.UserService;
+
+import java.util.Optional;
 
 public class UserController {
-    private final UserOrderManager userOrderManager;
-    private final ShopProductManager shopProductManager;
+    private UserService userService;
 
-    public UserController(UserOrderManager userOrderManager, ShopProductManager shopProductManager) {
-        this.userOrderManager = userOrderManager;
-        this.shopProductManager = shopProductManager;
-    }
-
-    public void setUser(){
-    }
-
-    public void changeAmount(User user,int amount){
-        user.chargeAmount(amount);
-    }
-
-    public void order(User user,String productName){
-        Product product = shopProductManager.findProductByName(productName);
-        userOrderManager.orderByOne(user, product);
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
 
+    public Optional<User> login(String id, String password) {
+        return userService.login(id, password);
+    }
 
+    public User join(String id, String password, String name, int amount) {
+        return userService.join(id, password, name, amount);
+    }
 
-
+    public User findUserById(String id) {
+        return userService.findUserById(id);
+    }
 
 }
