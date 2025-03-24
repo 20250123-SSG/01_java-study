@@ -5,9 +5,11 @@ import com.homework.common.MathCalculator;
 import com.homework.common.StringCalculator;
 import com.homework.dto.FoodShop;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
     public class Calculator implements StringCalculator, MathCalculator, DateCalculator {
@@ -25,66 +27,134 @@ import java.util.StringTokenizer;
         10,백년미가(유촌점),광주광역시 서구 유덕로28번길 18,062-946-3392,한상맛집,2022-01-11
     """;
 
-
         @Override
         public void printNowDateTime() {
-            /**
-             * 1. LocalDateTime을 이용하여 현재 날짜 및 시간의 정보를 얻어 출력하는 메소드
-             *    단, "2024-01-04 17:30:05"  과 같은 형식으로 출력될 수 있도록 하시오.
-             *    (toString, replace, substring, indexOf 메소드 모두 사용하여 푸시오)
-             */
-            LocalDateTime dateTime = LocalDateTime.now();
-            System.out.println(dateTime);
+            String now = LocalDateTime.now().toString();
 
+            System.out.println(now
+                    .replace("T", " ")
+                    .substring(0, now.indexOf(".")));
         }
 
         @Override
         public Calendar makeCalendar(String year, String month, String date) {
-            return null;
+            Calendar cal = Calendar.getInstance();
+            cal.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(date));
+            return cal;
         }
 
         @Override
         public void printFormat(Calendar calc) {
-
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd EEE");
+            String date = sdf.format(calc.getTime());
+            System.out.println(date);
         }
 
         @Override
         public boolean isLeapYear(int year) {
+            if(year % 4 == 0){
+                if(year%100 != 0 || year%100 != 0){
+                    return true;
+                }
+            }
             return false;
         }
 
         @Override
         public long leapDate(int startYear, int endYear) {
-            return 0;
+            long totalDays = 0;
+
+            for(int year = startYear; year <= endYear; year++){
+                if(isLeapYear(year)){ // 윤년이면 366일 추가
+                    totalDays += 366;
+                } else{               // 평년이면 365일 추가
+                    totalDays += 365;
+                }
+            }
+            return totalDays;
         }
 
         @Override
         public int sumString(String num1, String num2) {
-            return 0;
+            int number1 = Integer.parseInt(num1);
+            int number2 = Integer.parseInt(num2);
+            return Math.round(number1 + number2);
         }
 
         @Override
         public int minusString(String num1, String num2) {
-            return 0;
+            try {
+                int number1 = Integer.parseInt(num1);
+                int number2 = Integer.parseInt(num2);
+                return (number1 - number2);
+            } catch (NumberFormatException e){
+                return -1;
+            }
         }
 
         @Override
         public int findCharCount(String str, char ch) {
-            return 0;
+            int count = 0; // count 해주기 위해 초기화
+            for(int i=0; i < str.length(); i++){
+                if(Character.toLowerCase(str.charAt(i)) == Character.toLowerCase(ch)){
+                    count++; // count 해주기
+                }
+            }
+            return count; // 몇개인지 반환
         }
 
         @Override
         public int selectTokenCount(String str) {
-            return 0;
+            StringTokenizer st = new StringTokenizer(str);
+            return st.countTokens();
         }
 
         @Override
         public String toSpaceUpper(String str) {
-            return "";
+            if(str == null || str.isEmpty()){
+                return str;
+            }
+
+            String[] words = str.split(" ");
+            StringBuilder result = new StringBuilder();
+
+            for(String word : words){
+                if (!word.isEmpty()){
+                    result.append(Character.toUpperCase(word.charAt(0)))
+                            .append(word.substring(1))
+                            .append(" ");
+                }
+            }
+            return result.toString().trim();
         }
 
         @Override
         public FoodShop[] csvFormat() {
-            return new FoodShop[0];
+            String[] rows = CSV_DATA.split("\n");
+            FoodShop[] foodShops = new FoodShop[rows.length];
+
+            for(int i=0; i<rows.length; i++){
+                String[] fields = rows[i].split(",");
+                foodShops[i] = new FoodShop(
+                        Integer.parseInt(fields[0]),
+                        fields[1],
+                        fields[2],
+                        fields[3],
+                        fields[4],
+                        fields[5]
+                        
+                        /*
+                            int id = fields.length > 0 ? Integer.parseInt(fields[0]) : 0;
+                            String name = fields.length > 1 ? fields[1] : "Unknown";
+                            String address = fields.length > 2 ? fields[2] : "Unknown";
+                            String phone = fields.length > 3 ? fields[3] : "Unknown";
+                            String type = fields.length > 4 ? fields[4] : "Unknown";
+                            String description = fields.length > 5 ? fields[5] : "No description";
+
+                            foodShops[i] = new FoodShop(id, name, address, phone, type, description);
+                         */
+                );
+            }
+            return foodShops;
         }
     }
